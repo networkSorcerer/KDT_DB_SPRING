@@ -23,6 +23,7 @@ public class HotelsApplication implements CommandLineRunner {
 	}
 
 	public static void main(String[] args) {
+		SpringApplication.run(HotelsApplication.class, args);
 		SpringApplication.run(HotelsApplication.class,args);
 
 	}
