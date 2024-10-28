@@ -25,4 +25,11 @@ public class HotelController {
         model.addAttribute("cityHotels",cityHotels);
         return "HotelList/cityHotels";
     }
+    @GetMapping("/selectRoom")
+    public String selectRoom(@RequestParam("hotelId") int hotelId,@RequestParam("hotelName") String hotelName,Model model){
+        model.addAttribute("hotelId",hotelId);
+        model.addAttribute("hotelName",hotelName);
+
+        return "/HotelList/reserveHotel";
+    }
 }
