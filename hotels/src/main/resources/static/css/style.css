@@ -1,0 +1,58 @@
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border:1px solid #ccc;
+}
+td {
+    background-color: beige;
+}
+
+thead {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.container {
+    background-image: url('../images/bg.jpg');
+    background-size: cover; /* 이미지가 화면에 맞게 확대/축소되도록 설정 */
+    background-repeat: no-repeat; /* 이미지 반복 없음 */
+    background-attachment: fixed; /* 스크롤 시 배경 이미지가 고정됨 */
+}
