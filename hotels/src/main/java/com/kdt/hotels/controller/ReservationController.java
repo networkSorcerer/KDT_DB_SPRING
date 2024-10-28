@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+@RequestMapping("/hotel")
 public class ReservationController {
     private final ReservationDAO reservationDAO;
 

@@ -3,7 +3,7 @@
 <head>
   <title>예약 관리</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
   <h2>예약 관리</h2>
@@ -22,16 +22,17 @@
     </thead>
     <tbody>
     <tr th:each="reserveList : ${reserveList}">
-      <td th:text="${reserveList.reserveID"></td>
-      <td th:text="${reserveList.hotelID"></td>
-      <td th:text="${reserveList.hotelName"></td>
-      <td th:text="${reserveList.startDate"></td>
-      <td th:text="${reserveList.endDate"></td>
-      <td th:text="${reserveList.roomid"></td>
-      <td th:text="${reserveList.roomtype"></td>
-      <td th:text="${reserveList.price"></td>
+      <td th:text="${reserveList.reserveID}"></td>
+      <td th:text="${reserveList.hotelID}"></td>
+      <td th:text="${reserveList.hotelName}"></td>
+      <td th:text="${reserveList.startDate}"></td>
+      <td th:text="${reserveList.endDate}"></td>
+      <td th:text="${reserveList.roomid}"></td>
+      <td th:text="${reserveList.roomtype}"></td>
+      <td th:text="${reserveList.price}"></td>
     </tr>
     </tbody>
   </table>
+  <button th:onclick="|location.href='@{./}'|">뒤로</button>
 </body>
 </html>
