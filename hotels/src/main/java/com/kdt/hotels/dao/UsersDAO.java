@@ -20,15 +20,44 @@ public class UsersDAO {
     public UsersDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public List<UsersVO> usersSelect(){
-        String sql = "SELECT * FROM EMP";
+    public List<UsersVO> usersSelect(){     //관리자의 모든 유저 확인(이름순)
+        String sql = "SELECT * FROM EMP ORDER BY NAME";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
-    public boolean UserInsert(UsersVO user) {
-        int result = 0;
-        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL,GRADE) VALUES (?,?,?,?,?,?)";
+    public List<UsersVO> findUserById(String userID) {
+        String sql = "SELECT * FROM USERS WHERE USERID = ?";
         try {
-            result = jdbcTemplate.update(sql, user.getUserID(), user.getPassword(), user.getName(), user.getAge(), user.getEmail(), user.getGrade());
+            return jdbcTemplate.query(sql, new UserRowMapper(), userID);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    public void userManagerUpdate(UsersVO user) {  // 유저 등급 수정(관리자 전용)
+        String query = "UPDATE EMP SET GRADE = ? WHERE USERID = ?";
+        jdbcTemplate.update(query, user.getGrade(), user.getUserID());
+    }
+    public void userUpdate(UsersVO user) {  // 유저의 개인정보 수정
+        String query = "UPDATE EMP SET PASSWORD=?, NAME=?, AGE=?, EMAIL=? WHERE USERID = ?";
+        jdbcTemplate.update(query, user.getPassword(),user.getName(),user.getAge(),user.getEmail(), user.getUserID());
+    }
+
+    public boolean userExists(String userID) {      // 유저 정보 등록 전 아이디 중복확인
+        String sql = "SELECT COUNT(*) FROM USERS WHERE USERID = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userID);
+        return count != null && count > 0;
+    }
+
+    public boolean UserInsert(UsersVO user) {
+        if (userExists(user.getUserID())) {     // 아이디 중복 확인 체크
+            System.out.println("중복된 아이디입니다.");
+            return false;
+        }
+
+        int result = 0;
+        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL,GRADE) VALUES (?,?,?,?,?,0)";   //유저 정보 등록시 그레이드는 자동으로 0 = 체크 불필요
+        try {
+            result = jdbcTemplate.update(sql, user.getUserID(), user.getPassword(), user.getName(), user.getAge(), user.getEmail());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
