@@ -15,13 +15,7 @@ import java.util.Scanner;
 public class HotelsApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
-	}
-
-	@Override
-	public void run (String... args) throws Exception {
-
-	}
-	public static void menu() {
+		SpringApplication.run(HotelsApplication.class, args);
 
 	}
 
