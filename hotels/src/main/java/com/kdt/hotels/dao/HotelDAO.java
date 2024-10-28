@@ -13,11 +13,19 @@ import java.util.List;
 public class HotelDAO {
     public final JdbcTemplate jdbcTemplate;
 
+    public static void main(String[] args) {
+    }
+
     public HotelDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     public List<HotelVO> hotelSelect() {
         String sql = "SELECT * FROM HOTEL";
+        try {
+            return jdbcTemplate.query(sql, new HotelRowMapper());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return jdbcTemplate.query(sql, new HotelRowMapper());
     }
 
