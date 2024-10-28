@@ -20,8 +20,10 @@
       <tbody>
       <tr th:each="hotels : ${cityHotels}">
         <td th:text="${hotels.hotelID}"></td>
-        <td th:text="${hotels.hotelName}"></td>
-        <td th:text="${hotels.region}"></td>
+        <td>
+          <a th:href="@{/hotel/selectRoom(hotelId=${hotels.hotelID}, hotelName=${hotels.hotelName})}"
+             th:text="${hotels.hotelName}"></a>
+        </td>        <td th:text="${hotels.region}"></td>
         <td th:text="${hotels.phone}"></td>
         <td th:text="${hotels.hotelExpl}"></td>
       </tr>
