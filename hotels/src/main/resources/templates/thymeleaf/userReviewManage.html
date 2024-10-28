@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>예약 관리</title>
+  <title>리뷰 관리</title>
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
-<h2>예약 관리</h2>
-<table id="userReservationListTable">
+<h2>리뷰 관리</h2>
+<table>
   <thead>
   <tr>
-    <th>예약번호</th>
+    <th>번호</th>
     <th>호텔번호</th>
     <th>호텔명</th>
-    <th>체크인</th>
-    <th>체크아웃</th>
+    <th>평점</th>
+    <th>내용</th>
     <th>방번호</th>
     <th>타입</th>
     <th>가격</th>
@@ -36,10 +36,3 @@
 <button th:onclick="|location.href='@{./}'|">뒤로</button>
 </body>
 </html>
-
-<script>
-  $("#userReservationListTable tbody tr").click(function(){
-    var reserveID = td.eq(0).text();
-    location.href = "userReservationUpdate?reserveID=" + reserveID;
-  });
-</script>
