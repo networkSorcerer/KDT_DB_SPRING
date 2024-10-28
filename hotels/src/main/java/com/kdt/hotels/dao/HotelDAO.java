@@ -64,18 +64,7 @@ public class HotelDAO {
             System.out.print(e.getHotelExpl());
         }
     }
-    public void hotelManagerRst(List<HotelVO> list) {
-        System.out.println("--------------------");
-        System.out.println("  호텔 리스트(관리자)");
-        System.out.println("--------------------");
-        for (HotelVO e : list) {
-            System.out.print(e.getHotelID() + " ");
-            System.out.print(e.getHotelName() + " ");
-            System.out.print(e.getRegion() + " ");
-            System.out.print(e.getPhone() + " ");
-            System.out.print(e.getHotelExpl());
-        }
-    }
+
 
 
     public static class HotelRowMapper implements RowMapper<HotelVO> {
@@ -89,5 +78,18 @@ public class HotelDAO {
                     rs.getString("HOTELEXPL")
             );
         }
+        public void hotelManagerRst(List<HotelVO> list) {
+            System.out.println("--------------------");
+            System.out.println("  호텔 리스트(관리자)");
+            System.out.println("--------------------");
+            for (HotelVO e : list) {
+                System.out.print(e.getHotelID() + " ");
+                System.out.print(e.getHotelName() + " ");
+                System.out.print(e.getRegion() + " ");
+                System.out.print(e.getPhone() + " ");
+                System.out.print(e.getHotelExpl());
+            }
+        }
+
     }
 }
