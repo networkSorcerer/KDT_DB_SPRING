@@ -13,8 +13,14 @@ import java.util.List;
 public class HotelDAO {
     public final JdbcTemplate jdbcTemplate;
 
+
     public HotelDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<HotelVO>cityHotels(String city){
+        String sql = "select * from hotel where region = ?";
+        return  jdbcTemplate.query(sql, new HotelRowMapper(), city );
     }
     public List<HotelVO> hotelSelect() {
         String sql = "SELECT * FROM HOTEL";
