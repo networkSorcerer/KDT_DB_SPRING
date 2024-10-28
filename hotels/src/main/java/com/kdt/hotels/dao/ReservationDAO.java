@@ -16,8 +16,8 @@ public class ReservationDAO {
     }
 
     public List<ReservationVO> userReservationList(){
-        String sql = "SELECT RE.RESERVEID, RE.USERID, RE.HOTELID, HO.HOTELNAME, " +
-                        "RE.STARTDATE, RE.ENDDATE, RE.ROOMID, RO.ROOMTYPE, RO.PRICE " +
+        String sql = "SELECT RE.RESERVEID , RE.USERID , RE.HOTELID , HO.HOTELNAME , " +
+                        "RE.STARTDATE , RE.ENDDATE , RE.ROOMID , RO.ROOMTYPE , RO.PRICE, RO.ROOMNUMBER " +
                         "FROM RESERVATION RE JOIN HOTEL HO " +
                                             "ON RE.HOTELID = HO.HOTELID " +
                                             "JOIN ROOM RO " +

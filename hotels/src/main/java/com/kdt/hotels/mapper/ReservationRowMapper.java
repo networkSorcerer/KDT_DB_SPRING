@@ -10,16 +10,16 @@ public class ReservationRowMapper implements RowMapper<ReservationVO> {
     @Override
     public ReservationVO mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ReservationVO(
-                rs.getInt("reserveID"),
-                rs.getString("userID"),
-                rs.getInt("hotelID"),
-                rs.getString("hotelName"),
-                rs.getDate("startDate"),
-                rs.getDate("endDate"),
-                rs.getInt("roomid"),
-                rs.getString("roomtype"),
-                rs.getInt("price"),
-                rs.getInt("roomNumber")
+                rs.getInt("RESERVEID"),
+                rs.getString("USERID"),
+                rs.getInt("HOTELID"),
+                rs.getString("HOTELNAME"),
+                rs.getDate("STARTDATE"),
+                rs.getDate("ENDDATE"),
+                rs.getInt("ROOMID"),
+                rs.getString("ROOMTYPE"),
+                rs.getInt("PRICE"),
+                rs.getInt("ROOMNUMBER")
         );
     }
 }

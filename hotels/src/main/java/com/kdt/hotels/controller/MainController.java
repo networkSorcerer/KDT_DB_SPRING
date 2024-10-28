@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-    @GetMapping("/")
+    @GetMapping("/hotel")
     public String home(){
         return "main/Main";
 
