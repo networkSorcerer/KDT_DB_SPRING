@@ -12,6 +12,7 @@ import lombok.Setter;
 public class ReviewVO {
     private int reviewID;
     private int hotelID;
+    private String hotelName;
     private String userID;
     private String content;
     private int star;

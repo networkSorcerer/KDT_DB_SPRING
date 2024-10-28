@@ -15,6 +15,7 @@ public class ReservationDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // 유저 예약 관리
     public List<ReservationVO> userReservationList(){
         String sql = "SELECT RE.RESERVEID , RE.USERID , RE.HOTELID , HO.HOTELNAME , " +
                         "RE.STARTDATE , RE.ENDDATE , RE.ROOMID , RO.ROOMTYPE , RO.PRICE, RO.ROOMNUMBER " +
@@ -23,5 +24,11 @@ public class ReservationDAO {
                                             "JOIN ROOM RO " +
                                             "ON RE.ROOMID = RO.ROOMID";
         return jdbcTemplate.query(sql, new ReservationRowMapper());
+    }
+
+    // 유저 예약 수정
+    public void userReservationUpdate(ReservationVO vo){
+        String sql = "UPDATE RESERVATION SET STARTDATE = ?, ENDDATE = ?, ROOMID = ? WHERE RESERVEID = ?";
+        jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
     }
 }
