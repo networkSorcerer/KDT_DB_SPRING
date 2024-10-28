@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>MyPage</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>Hotels</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
-<body>
-<h2></h2>
+<body class="container">
+
+<!-- 마이페이지 -->
+<div class="sidebar">
+  <h4 style="text-align: right;">~님 환영합니다.</h4>
+  <button onclick="location.href='@{/}'">예약 관리</button>
+  <button onclick="location.href='@{/}'">리뷰 관리</button>
+</div>
+
+<div class="content">
+  <h2>도시를 선택하세요</h2>
+  <form th:action="@{/selectCity}" method="post">
+    <label for="city">도시:</label>
+    <select name="city" id="city">
+      <option value="1">서울</option>
+      <option value="2">부산</option>
+      <option value="3">제주</option>
+      <option value="4">인천</option>
+      <option value="5">여수</option>
+      <option value="6">수원</option>
+      <option value="7">대전</option>
+      <option value="8">광주</option>
+      <option value="9">대구</option>
+      <option value="10">속초</option>
+    </select>
+
+    <button type="submit">확인</button>
+  </form>
+</div>
 </body>
 </html>
