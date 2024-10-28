@@ -13,8 +13,17 @@ import java.util.Scanner;
 
 @SpringBootApplication
 public class HotelsApplication implements CommandLineRunner {
+	private final HotelDAO hotelDAO;
+	private final UsersDAO usersDAO;
+	Scanner sc = new Scanner(System.in);
+
+	public HotelsApplication(HotelDAO hotelDAO, UsersDAO usersDAO) {
+		this.hotelDAO = hotelDAO;
+		this.usersDAO = usersDAO;
+	}
 
 	public static void main(String[] args) {
+		SpringApplication.run(HotelsApplication.class,args);
 	}
 
 	@Override

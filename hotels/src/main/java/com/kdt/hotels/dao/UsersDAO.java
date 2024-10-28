@@ -1,6 +1,7 @@
 package com.kdt.hotels.dao;
 
 import com.kdt.hotels.vo.UsersVO;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -48,7 +49,9 @@ public class UsersDAO {
         String query = "SELECT USERID FROM USERS WHERE USERID = ? AND PASSWORD = ?";
         try {
             name = jdbcTemplate.queryForObject(query, String.class, ID, password);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No matching user found.");
+        }catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return name;
@@ -58,6 +61,8 @@ public class UsersDAO {
         String query = "SELECT NAME FROM USERS WHERE USERID = ?";
         try {
             name = jdbcTemplate.queryForObject(query, String.class, ID);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No matching user found for ID: " + ID);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
