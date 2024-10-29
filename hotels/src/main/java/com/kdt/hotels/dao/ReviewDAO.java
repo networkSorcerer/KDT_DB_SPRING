@@ -36,4 +36,9 @@ public class ReviewDAO {
         return jdbcTemplate.query(sql, new Review1RowMapper(), hotelId);
     }
 
+    // 유저 리뷰 삭제
+    public void userReviewDelete(int reviewID){
+        String sql = "DELETE REVIEWS WHERE REVIEWID = ?";
+        jdbcTemplate.update(sql, reviewID);
+    }
 }
