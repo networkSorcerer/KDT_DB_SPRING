@@ -36,8 +36,8 @@ public class ReservationController {
     }
 
     // 유저 에약 DB 수정
-    @PostMapping("/userReservationUpdate")
-    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
-        model.addAttribute()
-    }
+//    @PostMapping("/userReservationUpdate")
+//    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
+//        model.addAttribute()
+//    }
 }

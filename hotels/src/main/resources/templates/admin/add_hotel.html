@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Hotel</title>
+</head>
+<body>
+<h2>호텔 추가</h2>
+<form th:action="@{/admin/hotel/add}" method="post" th:object="${hotel}">
+    <label>호텔 이름:</label> <input type="text" th:field="*{hotelName}" /><br />
+    <label>도시:</label> <input type="text" th:field="*{region}" /><br />
+    <label>전화번호:</label> <input type="text" th:field="*{phone}" /><br />
+    <label>설명:</label> <textarea th:field="*{hotelExpl}"></textarea><br />
+    <button type="submit">저장</button>
+</form>
+</body>
+</html>

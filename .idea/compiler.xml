@@ -11,5 +11,10 @@
         <module name="hotels.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hotels" target="17" />
+      <module name="hotels.main" target="17" />
+      <module name="hotels.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
