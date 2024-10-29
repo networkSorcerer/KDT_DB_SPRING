@@ -12,24 +12,23 @@
   <h4 style="text-align: right;"><span th:text="${session.name}"></span>님 환영합니다.</h4>
   <button onclick="location.href='@{/reserve/userReservationList}'">예약 관리</button>
   <button onclick="location.href='@{/review/userReviewList}'">리뷰 관리</button>
-  <button onclick="location.href='@{/}'">로그아웃</button>
-</div>
+  <button onclick="location.href='@{/logout}'">로그아웃</button></div>
 
 <div class="content">
   <h2>도시를 선택하세요</h2>
-  <form th:action="@{/selectCity}" method="post">
+  <form th:action="@{/hotel/selectCity}" method="post">
     <label for="city">도시:</label>
-    <select name="city" id="city">
-      <option value="1">서울</option>
-      <option value="2">부산</option>
-      <option value="3">제주</option>
-      <option value="4">인천</option>
-      <option value="5">여수</option>
-      <option value="6">수원</option>
-      <option value="7">대전</option>
-      <option value="8">광주</option>
-      <option value="9">대구</option>
-      <option value="10">속초</option>
+    <select name="region" id="city">
+      <option value="서울">서울</option>
+      <option value="부산">부산</option>
+      <option value="제주">제주</option>
+      <option value="인천">인천</option>
+      <option value="여수">여수</option>
+      <option value="수원">수원</option>
+      <option value="대전">대전</option>
+      <option value="광주">광주</option>
+      <option value="대구">대구</option>
+      <option value="속초">속초</option>
     </select>
 
     <button type="submit">확인</button>
