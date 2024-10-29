@@ -44,7 +44,9 @@ public class LoginController {
 
             if (user.getGrade() == 1) {
                 return "redirect:/admin/management"; // redirect로 관리 페이지로 이동
-            } else {
+            } else if (user.getGrade() == 3) {
+                return "Main/mainMenu";
+            }else {
                 return "Main/LoginMain"; //
             }
         } else {

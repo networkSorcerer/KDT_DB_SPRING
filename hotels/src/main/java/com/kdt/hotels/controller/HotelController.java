@@ -51,4 +51,10 @@ public class HotelController {
         model.addAttribute("userid",userid);
         return "/HotelList/selectRoom";
     }
+    @GetMapping ("/hotelList")
+    public String hotelList(Model model) {
+        List<HotelVO> hotelList =hotelDAO.hotelList4();
+        model.addAttribute("hotelList",hotelList);
+        return "HotelList/Hotels";
+    }
 }
