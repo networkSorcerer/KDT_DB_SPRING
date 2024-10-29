@@ -4,11 +4,9 @@ import com.kdt.hotels.dao.ReservationDAO;
 import com.kdt.hotels.vo.ReservationVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -30,18 +28,34 @@ public class ReservationController {
     // 호텔 예약
     @GetMapping("/reserveHotel")
     public String insertViewReserve(Model model) {
-        ReservationVO reservationVO = new ReservationVO();
-        model.addAttribute("selectRoom", reservationVO);
-        System.out.println("ReservationVO added to model: " + reservationVO);
+        model.addAttribute("selectRoom", new ReservationVO());
         return "HotelList/selectRoom";
     }
 
     // 호텔 예약 결과
     @PostMapping("/reserveHotel")
-    public String insertDBReserve (@ModelAttribute("selectRoom") ReservationVO empVO, Model model) {
-        boolean isSuccess = reservationDAO.reserveHotel(empVO);
-        model.addAttribute("isSuccess",isSuccess);
-        return "HotelList/reserveResult";
+    public String reserveHotel(
+            @RequestParam("hotelId") int hotelId,
+            @RequestParam("userID") String userID,
+            @RequestParam("startdate") String startDate,
+            @RequestParam("enddate") String endDate,
+            @RequestParam("roomID") int roomId,
+            Model model) {
+
+        // Create a ReservationVO object and set the properties
+        ReservationVO reservation = new ReservationVO();
+        reservation.setHotelID(hotelId);
+        reservation.setUserID(userID);
+        reservation.setStartDate(Date.valueOf(startDate));
+        reservation.setEndDate(Date.valueOf(endDate));
+        reservation.setRoomid(roomId);
+
+
+        model.addAttribute("reservation", reservation);
+        boolean isSuccess = reservationDAO.reserveHotel(reservation);
+        model.addAttribute("isSuccess", isSuccess);
+
+        return "HotelList/reserveResult"; // Change this to your actual confirmation page
     }
 
     // 유저 예약 수정 페이지
