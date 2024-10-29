@@ -53,4 +53,12 @@ public class ReviewController {
         reviewDAO.userReviewUpdate(vo);
         return "redirect:/review/userReviewList";
     }
+
+    // 유저 리뷰 삭제 DB
+    @PostMapping("/userReviewDelete")
+    public String userReviewDelete(Model model, @RequestParam("reviewID") int reviewID){
+        model.addAttribute("reviewID", reviewID);
+        reviewDAO.userReviewDelete(reviewID);
+        return "redirect:/review/userReviewList";
+    }
 }

@@ -25,6 +25,7 @@
   <textarea id="content" name="content" th:text="${content}"></textarea>
   <br>
   <button type="submit">수정</button>
+  <button type="submit" th:formaction="@{/review/userReviewDelete}">삭제</button>
   <button th:onclick="|location.href='@{/review/userReviewList}'|">취소</button>
 </form>
 </body>

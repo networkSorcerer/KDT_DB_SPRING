@@ -78,7 +78,7 @@ public class ReservationController {
         return "thymeleaf/userReservationUpdate";
     }
 
-    // 유저 에약 수정 DB
+    // 유저 예약 수정 DB
     @PostMapping("/userReservationUpdate")
     public String userReservationDBUpdate(@RequestParam("reserveID") int reserveID, @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate, @RequestParam("roomID") int roomID, Model model) {
         ReservationVO vo = new ReservationVO();
@@ -88,6 +88,14 @@ public class ReservationController {
         vo.setRoomid(roomID);
         model.addAttribute("reservationUpdate", vo);
         reservationDAO.userReservationUpdate(vo);
+        return "redirect:/reserve/userReservationList";
+    }
+
+    // 유저 예약 삭제
+    @PostMapping("/userReservationDelete")
+    public String userReservationDelete(Model model, @RequestParam("reserveID") int reserveID){
+        model.addAttribute("reservationDelete", reserveID);
+        reservationDAO.userReservationDelete(reserveID);
         return "redirect:/reserve/userReservationList";
     }
 }
