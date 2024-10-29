@@ -7,24 +7,9 @@
 </head>
 <body>
 <div class="sidebar">
-  <h2>로그인</h2>
-<<<<<<< HEAD
-  <form th:action="@{/login/login}" method="post">
-=======
-  <form th:action="@{/login}" method="post">
-
->>>>>>> develop
-    <label for="username">사용자 ID:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-
-    <label for="password">비밀번호:</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">로그인</button>
-  </form>
-
-  <button onclick="location.href='@{/signup}'">회원 가입</button>
+  <h2>반갑습니다, <span th:text="${user.name}">사용자</span>님!</h2>
+  <h1>당신의 등급: <span th:text="${user.grade}">등급</span></h1>
+  <button onclick="location.href='/logout'">로그아웃</button>
 </div>
 
 <div class="content">
