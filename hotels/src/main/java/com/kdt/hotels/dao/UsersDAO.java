@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.util.*;
-
+import java.util.List;
 
 @Repository
 public class UsersDAO {
@@ -21,7 +19,7 @@ public class UsersDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public List<UsersVO> usersSelect(){     //관리자의 모든 유저 확인(이름순)
-        String sql = "SELECT * FROM users ORDER BY NAME";
+        String sql = "SELECT * FROM USERS ORDER BY NAME";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
     public List<UsersVO> findUserById(String userID) {
@@ -65,11 +63,10 @@ public class UsersDAO {
     }
     public boolean ManagerInsert(UsersVO user) {
         if (userExists(user.getUserID())) {     // 아이디 중복 확인 체크
-            System.out.println("중복된 아이디입니다.");
-            return false;
+            throw new IllegalArgumentException("중복된 아이디입니다."); // 예외 발생
         }
         int result = 0;
-        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL,GRADE) VALUES (?,?,?,?,?,1)";   //유저 정보 등록시 그레이드는 자동으로 0 = 체크 불필요
+        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL, GRADE) VALUES (?, ?, ?, ?, ?, 1)";
         try {
             result = jdbcTemplate.update(sql, user.getUserID(), user.getPassword(), user.getName(), user.getAge(), user.getEmail());
         } catch (Exception e) {
@@ -106,7 +103,8 @@ public class UsersDAO {
             grade = jdbcTemplate.queryForObject(query, Integer.class, ID);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
-
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         return grade;
     }
@@ -128,12 +126,12 @@ public class UsersDAO {
     @Override
         public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new UsersVO(
-                rs.getString("userID"),
-                rs.getString("password"),
-                rs.getString("name"),
+                rs.getString("USERID"),
+                rs.getString("PASSWORD"),
+                rs.getString("NAME"),
                 rs.getInt("age"),
-                rs.getString("email"),
-                rs.getInt("grade")
+                rs.getString("EMAIL"),
+                rs.getInt("GRADE")
             );
         }
     }

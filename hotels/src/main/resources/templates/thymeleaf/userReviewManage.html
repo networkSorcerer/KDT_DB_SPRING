@@ -20,7 +20,7 @@
   <tbody>
   <tr th:each="reviewList : ${reviewList}">
     <td>
-    <a th:href="@{/review/userReviewUpdate (reviewID=${reviewList.reviewID}, (hotelID=${reviewList.hotelID}, (hotelName=${reviewList.hotelName}, (star=${reviewList.star}, (content=${reviewList.content})}"
+    <a th:href="@{/review/userReviewUpdate (reviewID=${reviewList.reviewID}, hotelID=${reviewList.hotelID}, hotelName=${reviewList.hotelName}, star=${reviewList.star}, content=${reviewList.content})}"
        th:text="${reviewList.reviewID}"></a>
     </td>
     <td th:text="${reviewList.hotelID}"></td>
