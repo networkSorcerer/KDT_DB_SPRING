@@ -1,5 +1,6 @@
 package com.kdt.hotels.dao;
 
+import com.kdt.hotels.mapper.Review1RowMapper;
 import com.kdt.hotels.mapper.ReviewRowMapper;
 import com.kdt.hotels.vo.ReviewVO;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,4 +28,11 @@ public class ReviewDAO {
         String sql = "UPDATE REVIEW SET CONTENT, START FROM REVIEWS WHERE REVIEWID = ?";
         jdbcTemplate.update(sql, vo.getReviewID());
     }
+  
+    public List<ReviewVO> hotelReviewList(int hotelId) {
+        // SQL 쿼리 수정
+        String sql = "SELECT userid, content, star FROM reviews WHERE hotelid = ?";
+        return jdbcTemplate.query(sql, new Review1RowMapper(), hotelId);
+    }
+
 }
