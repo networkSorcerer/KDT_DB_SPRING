@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>예약 관리</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="container">
+<h2>예약 관리</h2>
+<table id="userReservationListTable">
+  <thead>
+  <tr>
+    <th>예약번호</th>
+    <th>호텔번호</th>
+    <th>호텔명</th>
+    <th>체크인</th>
+    <th>체크아웃</th>
+    <th>방번호</th>
+    <th>타입</th>
+    <th>가격</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="reserveList : ${reserveList}">
+    <td th:text="${reserveList.reserveID}"></td>
+    <td th:text="${reserveList.hotelID}"></td>
+    <td th:text="${reserveList.hotelName}"></td>
+    <td th:text="${reserveList.startDate}"></td>
+    <td th:text="${reserveList.endDate}"></td>
+    <td th:text="${reserveList.roomid}"></td>
+    <td th:text="${reserveList.roomtype}"></td>
+    <td th:text="${reserveList.price}"></td>
+  </tr>
+  </tbody>
+</table>
+<button th:onclick="|location.href='@{./}'|">뒤로</button>
+</body>
+</html>
+
+<script>
+  $("#userReservationListTable tbody tr").click(function(){
+    var reserveID = td.eq(0).text();
+    location.href = "userReservationUpdate?reserveID=" + reserveID;
+  });
+</script>

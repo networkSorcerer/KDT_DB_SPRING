@@ -17,9 +17,11 @@ import java.util.List;
 public class HotelDAO {
     public final JdbcTemplate jdbcTemplate;
 
+
     public HotelDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     public List<HotelVO> hotelSelect() {    //호텔의 모든 정보 뽑아오기(ID순 정렬)
         String sql = "SELECT * FROM HOTEL ORDER BY HOTELID";
         try {
@@ -67,6 +69,13 @@ public class HotelDAO {
             System.out.println(e.getMessage());
             return Collections.emptyList();
         }
+
+
+    public List<HotelVO>cityHotels(String city){
+        String sql = "select * from hotel where region = ?";
+        return  jdbcTemplate.query(sql, new HotelRowMapper(), city );
+    }
+
     }
     //호텔 최저 금액, 최고금액 정렬
     public List<HotelPriceVo> hotelMaxPrice(String region) {    //최고금액 순 리스트

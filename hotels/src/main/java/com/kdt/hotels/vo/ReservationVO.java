@@ -18,7 +18,8 @@ public class ReservationVO {
     private String hotelName;
     private Date startDate;
     private Date endDate;
-    private String price;
-    private String roomNumber;
-    private int roomID;
+    private int roomid;
+    private String roomtype;
+    private int price;
+    private int roomNumber;
 }
