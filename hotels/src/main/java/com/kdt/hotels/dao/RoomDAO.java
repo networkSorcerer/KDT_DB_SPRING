@@ -26,6 +26,14 @@ public class RoomDAO {
 
         return jdbcTemplate.query(sql, new RoomRowMapper(),hotelId);
     }
+    public List<RoomVO>hotelRoom(int hotelId){
+        String sql ="select * from room where hotelid = ?";
+        try{
+            return jdbcTemplate.query(sql, new RoomRowMapper(), hotelId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static class RoomRowMapper implements RowMapper<RoomVO> {
         @Override
