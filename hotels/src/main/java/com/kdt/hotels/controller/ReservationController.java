@@ -4,15 +4,13 @@ import com.kdt.hotels.dao.ReservationDAO;
 import com.kdt.hotels.vo.ReservationVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/hotel")
+@RequestMapping("/reserve") //reservation
 public class ReservationController {
     private final ReservationDAO reservationDAO;
 
@@ -27,6 +25,38 @@ public class ReservationController {
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }
+    // 호텔 예약
+    @GetMapping("/reserveHotel")
+    public String insertViewReserve(Model model) {
+        model.addAttribute("selectRoom", new ReservationVO());
+        return "HotelList/selectRoom";
+    }
+
+    // 호텔 예약 결과
+    @PostMapping("/reserveHotel")
+    public String reserveHotel(
+            @RequestParam("hotelId") int hotelId,
+            @RequestParam("userID") String userID,
+            @RequestParam("startdate") String startDate,
+            @RequestParam("enddate") String endDate,
+            @RequestParam("roomID") int roomId,
+            Model model) {
+
+        // Create a ReservationVO object and set the properties
+        ReservationVO reservation = new ReservationVO();
+        reservation.setHotelID(hotelId);
+        reservation.setUserID(userID);
+        reservation.setStartDate(Date.valueOf(startDate));
+        reservation.setEndDate(Date.valueOf(endDate));
+        reservation.setRoomid(roomId);
+
+
+        model.addAttribute("reservation", reservation);
+        boolean isSuccess = reservationDAO.reserveHotel(reservation);
+        model.addAttribute("isSuccess", isSuccess);
+
+        return "HotelList/reserveResult"; // Change this to your actual confirmation page
+    }
 
     // 유저 예약 수정 페이지
     @GetMapping("/userReservationUpdate")
@@ -36,8 +66,8 @@ public class ReservationController {
     }
 
     // 유저 에약 DB 수정
-    @PostMapping("/userReservationUpdate")
-    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
-        model.addAttribute()
-    }
+//    @PostMapping("/userReservationUpdate")
+//    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
+//        model.addAttribute()
+//    }
 }

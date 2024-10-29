@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>호텔 수정</title>
+</head>
+<body>
+<h2>호텔 수정</h2>
+<form th:action="@{/admin/hotel/update}" method="post">
+    <input type="hidden" th:name="hotelID" th:value="${hotel.hotelID}"/>
+    <label for="hotelName">호텔 이름:</label>
+    <input type="text" id="hotelName" th:name="hotelName" th:value="${hotel.hotelName}" required/><br/>
+
+    <label for="region">도시:</label>
+    <input type="text" id="region" th:name="region" th:value="${hotel.region}" required/><br/>
+
+    <label for="phone">전화번호:</label>
+    <input type="text" id="phone" th:name="phone" th:value="${hotel.phone}" required/><br/>
+
+    <label for="hotelExpl">설명:</label>
+    <textarea id="hotelExpl" th:name="hotelExpl" required>${hotel.hotelExpl}</textarea><br/>
+
+    <button type="submit">수정 완료</button>
+</form>
+<a href="/admin/hotel_management">돌아가기</a>
+</body>
+</html>

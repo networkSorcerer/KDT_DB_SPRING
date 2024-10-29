@@ -6,6 +6,7 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
+<div class="form-container">
   <h2>호텔 정보</h2>
     <table>
       <thead>
@@ -23,11 +24,13 @@
         <td>
           <a th:href="@{/hotel/selectRoom(hotelId=${hotels.hotelID}, hotelName=${hotels.hotelName})}"
              th:text="${hotels.hotelName}"></a>
-        </td>        <td th:text="${hotels.region}"></td>
+        </td>
+        <td th:text="${hotels.region}"></td>
         <td th:text="${hotels.phone}"></td>
         <td th:text="${hotels.hotelExpl}"></td>
       </tr>
       </tbody>
     </table>
+</div>
 </body>
 </html>
