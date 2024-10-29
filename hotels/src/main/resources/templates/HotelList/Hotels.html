@@ -14,7 +14,7 @@
       <td th:text="${hotel.region}"></td>
       <td th:text="${hotel.hotelExpl}"></td>
       <td>
-        <button onclick="location.href='/room/hotelRoom${hotel.hotelID}'">방보기</button>
+        <a th:href="'/room/hotelRoom/' + ${hotel.hotelID}">방보기</a>
       </td>
     </tr>
   </table>

@@ -19,8 +19,11 @@ public class RoomController {
 
     @GetMapping("/hotelRoom/{hotelID}")
     public String hotelRoom(@PathVariable("hotelID") int hotelID, Model model) {
+
         List<RoomVO> hotelRoom = roomDAO.hotelRoom(hotelID);
-        model.addAttribute("hotelRoom",hotelRoom);
-        return "/HotelList/RoomList";
+
+        model.addAttribute("hotelRoom", hotelRoom);
+
+        return "/HotelList/RoomList"; // 뷰 경로가 올바른지 확인하세요.
     }
 }
