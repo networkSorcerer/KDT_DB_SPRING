@@ -17,14 +17,13 @@ public class ReservationDAO {
     }
 
     // 유저 예약 관리
-    public List<ReservationVO> userReservationList(){
-        String sql = "SELECT RE.RESERVEID , RE.USERID , RE.HOTELID , HO.HOTELNAME , " +
-                        "RE.STARTDATE , RE.ENDDATE , RE.ROOMID , RO.ROOMTYPE , RO.PRICE, RO.ROOMNUMBER " +
-                        "FROM RESERVATION RE JOIN HOTEL HO " +
-                                            "ON RE.HOTELID = HO.HOTELID " +
-                                            "JOIN ROOM RO " +
-                                            "ON RE.ROOMID = RO.ROOMID";
-        return jdbcTemplate.query(sql, new ReservationRowMapper());
+    public List<ReservationVO> userReservationList(String userID){
+        String sql = "SELECT RE.RESERVEID, RE.USERID, RE.HOTELID, HO.HOTELNAME, " +
+                        "RE.STARTDATE, RE.ENDDATE, RE.ROOMID, RO.ROOMTYPE, RO.PRICE, RO.ROOMNUMBER " +
+                        "FROM RESERVATION RE JOIN HOTEL HO ON RE.HOTELID = HO.HOTELID " +
+                                            "JOIN ROOM RO ON RE.ROOMID = RO.ROOMID " +
+                        "WHERE USERID = ?";
+        return jdbcTemplate.query(sql, new ReservationRowMapper(), userID);
     }
 
     // 유저 예약 수정
