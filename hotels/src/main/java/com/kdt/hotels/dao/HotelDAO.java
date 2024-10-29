@@ -27,6 +27,7 @@ public class HotelDAO {
         return jdbcTemplate.query(sql, new HotelRowMapper());
     }
 
+
     public boolean hotelInsert(HotelVO hotel) {
         int result = 0;
         String sql = "INSERT INTO HOTEL (HOTLEID, HOTELNAME, REGION, PHONE, HOTELEXPL) "+
@@ -70,6 +71,7 @@ public class HotelDAO {
             System.out.print(e.getHotelExpl());
         }
     }
+
 
 
 

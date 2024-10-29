@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -10,10 +10,43 @@
 <p>호텔 ID: <span th:text="${hotelId}"></span></p>
 <p>호텔 이름: <span th:text="${hotelName}"></span></p>
 
-<!-- 예약 폼 또는 추가 정보 표시 -->
-<form action="/hotel/reserveHotel" method="post">
+<!-- 예약 폼 또는 추가 정보 표시 --><!--th:object="${reserveHotel}" 여기에 ${} , @{/hotel/reserveHotel}빼먹음 -->
+<form th:action="@{/hotel/reserveHotel}" th:object="${reserveHotel}" method="post">
   <input type="hidden" name="hotelId" th:value="${hotelId}"/>
   <input type="hidden" name="hotelName" th:value="${hotelName}"/>
+
+  <label for="userID">회원ID 입력</label>
+  <input type="text" id="userID" name="userID">
+
+  <label for="startdate">체크 인</label>
+  <input type="date" id="startdate" name="startdate" th:field="*{startdate}">
+
+  <label for="enddate">체크 아웃</label>
+  <input type="date" id="enddate" name="enddate" th:field="*{enddate}">
+
+  <table>
+    <thead>
+    <tr>
+      <th>방 선택</th>
+      <th>room ID</th>
+      <th>호텔 ID</th>
+      <th>방 타입</th>
+      <th>가격</th>
+      <th>방 번호</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${avaRoom}">
+      <td><input type="radio" name="selectedRoom" th:field="${room.roomid}"></td>
+      <td th:text="${room.roomid}"></td>
+      <td th:text="${room.hotelid}"></td>
+      <td th:text="${room.roomType}"></td>
+      <td th:text="${room.price}"></td>
+      <td th:text="${room.roomNumber}"></td>
+    </tr>
+    </tbody>
+  </table>
+
   <!-- 추가 입력 필드 작성 가능 -->
   <button type="submit">예약하기</button>
 </form>

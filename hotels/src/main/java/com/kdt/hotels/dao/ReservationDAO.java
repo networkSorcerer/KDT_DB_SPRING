@@ -24,4 +24,15 @@ public class ReservationDAO {
                                             "ON RE.ROOMID = RO.ROOMID";
         return jdbcTemplate.query(sql, new ReservationRowMapper());
     }
+
+    public boolean reserveHotel(ReservationVO vo) {
+        int result = 0;
+        String sql = "insert into reservation (reserveid, userid,  hotelid, roomid,startdate, enddate ) values (?,?,?,?,?,?)";
+        try {
+            result = jdbcTemplate.update(sql, vo.getReserveID(),vo.getUserID(),vo.getHotelID(),vo.getRoomid(),vo.getStartDate(),vo.getEndDate());
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
+    }
 }
