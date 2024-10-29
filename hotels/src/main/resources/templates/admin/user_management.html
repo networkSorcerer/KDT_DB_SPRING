@@ -23,17 +23,17 @@
         <td th:text="${user.email}"></td>
         <td th:text="${user.grade == 1 ? '관리자' : '유저'}"></td>
         <td>
-            <form th:action="@{'/admin/user/promote/' + ${user.userID}}" method="post">
+            <form th:action="@{/admin/management/user/promote/{userID}(userID=${user.userID})}" method="post">
                 <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
             </form>
         </td>
         <td>
-            <form th:action="@{'/admin/user/delete/' + ${user.userID}}" method="post">
+            <form th:action="@{/admin/management/user/delete/{userID}(userID=${user.userID})}" method="post">
                 <button type="submit">삭제</button>
             </form>
         </td>
     </tr>
 </table>
-<a href="/admin/user/add">관리자 추가</a>
+<a th:href="@{/admin/management/user/add}">관리자 추가</a>
 </body>
 </html>
