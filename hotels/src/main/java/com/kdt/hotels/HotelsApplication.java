@@ -36,7 +36,7 @@ public class HotelsApplication implements CommandLineRunner {
 		hotelDAO.hotelMinPList(s);
 		System.out.println();
 		System.out.println(usersDAO.userGrade("user03"));
-		System.out.println(usersDAO.userLogin("user03", "pass789"));
+
 	}
 	public static void menu() {
 
