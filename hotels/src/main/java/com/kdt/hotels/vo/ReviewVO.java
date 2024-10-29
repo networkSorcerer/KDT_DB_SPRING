@@ -16,4 +16,7 @@ public class ReviewVO {
     private String userID;
     private String content;
     private int star;
+
+    public ReviewVO(String userID, String content, int star) {
+    }
 }
