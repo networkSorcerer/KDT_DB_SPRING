@@ -23,15 +23,17 @@ public class HotelsApplication implements CommandLineRunner {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(HotelsApplication.class, args);
 		SpringApplication.run(HotelsApplication.class,args);
 
 	}
 
 	@Override
 	public void run (String... args) throws Exception {
-		hotelDAO.hotelStarList();
+		String s = "Seoul";
+		hotelDAO.hotelStarList(s);
 		hotelDAO.allHotelList();
+		hotelDAO.hotelMaxPList(s);
+		hotelDAO.hotelMinPList(s);
 	}
 	public static void menu() {
 

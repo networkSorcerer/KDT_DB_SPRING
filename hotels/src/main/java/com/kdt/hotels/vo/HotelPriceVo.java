@@ -9,12 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotelStarVO {
-        private int hotelID;
-        private String hotelName;
-        private String phone;
-        private String hotelExpl;
-        private Double avg;
-    }
-
-
+public class HotelPriceVo {
+    private int hotelID;
+    private String hotelName;
+    private String hotelPhone;
+    private int hotelPriceMax;
+    private int hotelPriceMin;
+}
