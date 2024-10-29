@@ -1,86 +1,98 @@
- body {
-      display: flex;
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 20px;
-    }
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    justify-content: center; /* Center content horizontally */
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.sidebar {
+    width: 300px; /* Adjusted width */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.sidebar form {
+    margin-bottom: 15px;
+}
 
 .sidebar input {
-    width: 80%; /* 원하는 길이에 맞게 너비를 조정 (예: 80%로 설정) */
-    max-width: 300px; /* 최대 너비를 지정하여 너무 커지지 않도록 설정 */
-    margin-bottom: 15px; /* 입력 필드 아래에 공간 추가 */
-    padding: 10px; /* 입력 필드 안쪽 여백 추가 */
-    border: 1px solid #ccc; /* 테두리 색상 */
-    border-radius: 4px; /* 모서리 둥글게 */
+    width: 80%; /* Adjust to full width */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
-    .sidebar {
-      width: 250px;
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      margin-right: 20px;
-    }
 
-    .sidebar h2 {
-      font-size: 1.5em;
-      color: #333;
-    }
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    .sidebar form {
-      margin-bottom: 15px;
-    }
+.sidebar button:hover {
+    background-color: #0056b3;
+}
 
-    .sidebar button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+.content {
+    flex: 1;
+    max-width: 400px; /* Set a max width */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .sidebar button:hover {
-      background-color: #0056b3;
-    }
+.content h2 {
+    color: #333;
+}
 
-    .content {
-      flex: 1;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+.content form {
+    margin-top: 20px;
+}
 
-    .content h2 {
-      color: #333;
-    }
+.content select,
+.content input {
+    width: 100%; /* Full width for inputs */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-    .content form {
-      margin-top: 20px;
-    }
+.content button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
 
-    .content select, .content input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .content button {
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .content button:hover {
-      background-color: #0056b3;
-    }
+.content button:hover {
+    background-color: #0056b3;
+}
