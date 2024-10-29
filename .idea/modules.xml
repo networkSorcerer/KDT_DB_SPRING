@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/KDT_DB_SPRING.iml" filepath="$PROJECT_DIR$/.idea/KDT_DB_SPRING.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hotels.iml" filepath="$PROJECT_DIR$/.idea/modules/hotels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hotels.main.iml" filepath="$PROJECT_DIR$/.idea/modules/hotels.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hotels.test.iml" filepath="$PROJECT_DIR$/.idea/modules/hotels.test.iml" />
     </modules>
   </component>
 </project>
