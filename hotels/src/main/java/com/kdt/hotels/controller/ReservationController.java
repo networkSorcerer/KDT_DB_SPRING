@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 
@@ -40,16 +41,20 @@ public class ReservationController {
     @PostMapping("/reserveHotel")
     public String reserveHotel(
             @RequestParam("hotelId") int hotelId,
-            @RequestParam("userID") String userID,
+            @RequestParam("userid") String userid1,
             @RequestParam("startdate") String startDate,
             @RequestParam("enddate") String endDate,
             @RequestParam("roomID") int roomId,
-            Model model) {
+            Model model, HttpSession session) {
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null && userid1 != null) {
+            userid = userid1;
+        }
 
         // Create a ReservationVO object and set the properties
         ReservationVO reservation = new ReservationVO();
         reservation.setHotelID(hotelId);
-        reservation.setUserID(userID);
+        reservation.setUserID(userid);
         reservation.setStartDate(Date.valueOf(startDate));
         reservation.setEndDate(Date.valueOf(endDate));
         reservation.setRoomid(roomId);
