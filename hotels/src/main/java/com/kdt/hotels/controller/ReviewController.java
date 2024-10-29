@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,8 +24,9 @@ public class ReviewController {
 
     // 유저 리뷰 리스트
     @GetMapping("/userReviewList")
-    public String userReviewList(Model model){
-        List<ReviewVO> reviewList = reviewDAO.userReviewList();
+    public String userReviewList(Model model, HttpSession session){
+        String userID = (String)session.getAttribute("userid");
+        List<ReviewVO> reviewList = reviewDAO.userReviewList(userID);
         model.addAttribute("reviewList", reviewList);
         return "thymeleaf/userReviewManage";
     }
