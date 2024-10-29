@@ -32,7 +32,7 @@ public class UsersDAO {
         }
     }
     public void userToManagerUpdate(UsersVO user) {  // 유저 등급 수정(관리자 전용)
-        String query = "UPDATE EMP SET GRADE = ? WHERE USERID = ?";
+        String query = "UPDATE USERS SET GRADE = ? WHERE USERID = ?";
         jdbcTemplate.update(query, user.getGrade(), user.getUserID());
     }
     public void userUpdate(UsersVO user) {  // 유저의 개인정보 수정
