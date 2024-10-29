@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>예약 관리</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="form-container">
+  <h1>예약 결과</h1>
+  <!-- Success Message -->
+  <div th:if="${isSuccess}" class="success">
+    예약 추가 성공
+  </div>
+
+  <!-- Failure Message -->
+  <div th:if="${!isSuccess}" class="failure">
+    예약 추가 실패
+  </div>
+
+  <a href="/">지역 조회 화면으로 이동</a>
+
+</div>
+
+</body>
+</html>

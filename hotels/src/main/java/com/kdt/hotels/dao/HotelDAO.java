@@ -81,6 +81,7 @@ public class HotelDAO {
             }
         }
 
+
     //호텔 최저 금액, 최고금액 정렬
     public List<HotelPriceVo> hotelMaxPrice(String region) {    //최고금액 순 리스트
         String sql ="SELECT H.HOTELID AS HOTELID , HOTELNAME, PHONE, MAX(price) AS hotelPriceMax, MIN(Price) AS hotelPriceMin \n" +
@@ -124,6 +125,7 @@ public class HotelDAO {
         }
     }
     @Transactional
+
     public boolean hotelInsert(HotelVO hotel) {
         int result = 0;
         String sql = "INSERT INTO HOTEL (HOTLEID, HOTELNAME, REGION, PHONE, HOTELEXPL) "+
@@ -222,9 +224,10 @@ public class HotelDAO {
                     rs.getString("HOTELEXPL")
             );
         }
-
-
     }
+
+
+
     public static class HotelStarRowMapper implements RowMapper<HotelStarVO> {
         @Override
         public HotelStarVO mapRow(ResultSet rs, int rowNum) throws SQLException {
