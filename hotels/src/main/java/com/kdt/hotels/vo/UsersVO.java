@@ -16,4 +16,10 @@ public class UsersVO {
     private int age;
     private String email;
     private int grade;
+
+    public UsersVO(String name) {
+    }
+
+    public UsersVO(String name, String userid, int grade, String password) {
+    }
 }

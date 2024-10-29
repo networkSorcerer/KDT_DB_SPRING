@@ -1,5 +1,6 @@
 package com.kdt.hotels.dao;
 
+import com.kdt.hotels.mapper.LoginRowMapper;
 import com.kdt.hotels.vo.UsersVO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+
+import java.util.*;
+
 
 @Repository
 public class UsersDAO {
@@ -18,7 +21,7 @@ public class UsersDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public List<UsersVO> usersSelect(){     //관리자의 모든 유저 확인(이름순)
-        String sql = "SELECT * FROM EMP ORDER BY NAME";
+        String sql = "SELECT * FROM users ORDER BY NAME";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
     public List<UsersVO> findUserById(String userID) {
@@ -85,15 +88,17 @@ public class UsersDAO {
         }
         return result > 0;
     }
-    public UsersVO userLogin(String ID, String password) { // 로그인 성공시 유저 값을 반환받아 로그인상태동안 사용-실험중
-        String query = "SELECT NAME FROM USERS WHERE USERID = ? AND PASSWORD = ?";
+
+    public UsersVO userLogin(String ID, String password) {
+        String query = "SELECT USERID, PASSWORD, name, grade FROM USERS WHERE USERID = ? AND PASSWORD = ?"; // 필요한 컬럼 추가
         try {
-            return jdbcTemplate.queryForObject(query, new UserRowMapper(), ID, password);
+            return jdbcTemplate.queryForObject(query, new LoginRowMapper(), ID, password);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
-            return null;
+            return null; // 로그인 실패 시 null 반환
         }
     }
+
     public Integer userGrade(String ID) {
         int grade = 0;
         String query = "SELECT GRADE FROM USERS WHERE USERID = ?";
@@ -101,8 +106,7 @@ public class UsersDAO {
             grade = jdbcTemplate.queryForObject(query, Integer.class, ID);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+
         }
         return grade;
     }
@@ -124,12 +128,12 @@ public class UsersDAO {
     @Override
         public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new UsersVO(
-                rs.getString("USERID"),
-                rs.getString("PASSWORD"),
-                rs.getString("NAME"),
+                rs.getString("userID"),
+                rs.getString("password"),
+                rs.getString("name"),
                 rs.getInt("age"),
-                rs.getString("EMAIL"),
-                rs.getInt("GRADE")
+                rs.getString("email"),
+                rs.getInt("grade")
             );
         }
     }

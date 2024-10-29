@@ -7,7 +7,7 @@
 </head>
 <body class="container">
 <h2>예약 관리</h2>
-<table id="userReservationListTable">
+<table>
   <thead>
   <tr>
     <th>예약번호</th>
@@ -22,9 +22,13 @@
   </thead>
   <tbody>
   <tr th:each="reserveList : ${reserveList}">
+
     <td th:text="${reserveList.reserveID}"></td>
     <td th:text="${reserveList.hotelID}"></td>
-    <td th:text="${reserveList.hotelName}"></td>
+      <td>
+        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName})}"
+           th:text="${reserveList.hotelName}"></a>
+      </td>
     <td th:text="${reserveList.startDate}"></td>
     <td th:text="${reserveList.endDate}"></td>
     <td th:text="${reserveList.roomid}"></td>
@@ -33,13 +37,6 @@
   </tr>
   </tbody>
 </table>
-<button th:onclick="|location.href='@{./}'|">뒤로</button>
+<button th:onclick="|location.href='@{../}'|">뒤로</button>
 </body>
 </html>
-
-<script>
-  $("#userReservationListTable tbody tr").click(function(){
-    var reserveID = td.eq(0).text();
-    location.href = "userReservationUpdate?reserveID=" + reserveID;
-  });
-</script>
