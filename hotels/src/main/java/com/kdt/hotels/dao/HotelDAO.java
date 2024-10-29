@@ -60,21 +60,26 @@ public class HotelDAO {
                 "\tFROM HOTEL h\n" +
                 "\tJOIN REVIEWS r \n" +
                 "\tON H.HOTELID = R.HOTELID \n" +
-                "\tWHERE REGION = ?\n"+
+                "\tWHERE REGION = ?\n" +
                 "\tGROUP BY H.HOTELID, H.HOTELNAME,h.REGION,h.PHONE,h.HOTELEXPL\n" +
                 "\tORDER BY AVG(r.STAR) DESC, H.HOTELNAME";
         try {
-            return jdbcTemplate.query(sql, new HotelStarRowMapper(),region);
+            return jdbcTemplate.query(sql, new HotelStarRowMapper(), region);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Collections.emptyList();
         }
-}
-
-    public List<HotelVO>cityHotels(String city){
-        String sql = "select * from hotel where region = ?";
-        return  jdbcTemplate.query(sql, new HotelRowMapper(), city );
     }
+
+        public List<HotelVO> cityHotels(String city){
+            String sql = "select * from hotel where region = ?";
+            try {
+                return jdbcTemplate.query(sql, new HotelRowMapper(), city);
+            } catch (Exception e) {
+                System.out.println("Error in cityHotels: " + e.getMessage());
+                return Collections.emptyList();
+            }
+        }
 
 
     //호텔 최저 금액, 최고금액 정렬

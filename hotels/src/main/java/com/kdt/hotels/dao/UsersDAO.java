@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.List;
+>>>>>>> develop
 
 @Repository
 public class UsersDAO {
@@ -31,7 +35,7 @@ public class UsersDAO {
             return null;
         }
     }
-    public void userManagerUpdate(UsersVO user) {  // 유저 등급 수정(관리자 전용)
+    public void userToManagerUpdate(UsersVO user) {  // 유저 등급 수정(관리자 전용)
         String query = "UPDATE EMP SET GRADE = ? WHERE USERID = ?";
         jdbcTemplate.update(query, user.getGrade(), user.getUserID());
     }
@@ -61,6 +65,21 @@ public class UsersDAO {
         }
         return result > 0;
     }
+    public boolean ManagerInsert(UsersVO user) {
+        if (userExists(user.getUserID())) {     // 아이디 중복 확인 체크
+            System.out.println("중복된 아이디입니다.");
+            return false;
+        }
+        int result = 0;
+        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL,GRADE) VALUES (?,?,?,?,?,1)";   //유저 정보 등록시 그레이드는 자동으로 0 = 체크 불필요
+        try {
+            result = jdbcTemplate.update(sql, user.getUserID(), user.getPassword(), user.getName(), user.getAge(), user.getEmail());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
+    }
+
     public boolean userDelete(String ID) {
         int result = 0;
         String query = "DELETE FROM USERS WHERE USERID = ?";
@@ -71,6 +90,7 @@ public class UsersDAO {
         }
         return result > 0;
     }
+<<<<<<< HEAD
     public UsersVO userLogin(String ID, String password) {
         String query = "SELECT USERID, PASSWORD, name, grade FROM USERS WHERE USERID = ? AND PASSWORD = ?"; // 필요한 컬럼 추가
         try {
@@ -78,10 +98,32 @@ public class UsersDAO {
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
             return null; // 로그인 실패 시 null 반환
+=======
+    public UsersVO userLogin(String ID, String password) { // 로그인 성공시 유저 값을 반환받아 로그인상태동안 사용-실험중
+        String query = "SELECT NAME FROM USERS WHERE USERID = ? AND PASSWORD = ?";
+        try {
+            return jdbcTemplate.queryForObject(query, new UserRowMapper(), ID, password);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No matching user found.");
+            return null;
+        }
+    }
+    public Integer userGrade(String ID) {
+        int grade = 0;
+        String query = "SELECT GRADE FROM USERS WHERE USERID = ?";
+        try {
+            grade = jdbcTemplate.queryForObject(query, Integer.class, ID);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No matching user found.");
+>>>>>>> develop
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null; // 예외 발생 시 null 반환
         }
+<<<<<<< HEAD
+=======
+        return grade;
+>>>>>>> develop
     }
 
     public String IDtoName(String ID) {     //유저 ID를 입력 받아 유저 이름 반환

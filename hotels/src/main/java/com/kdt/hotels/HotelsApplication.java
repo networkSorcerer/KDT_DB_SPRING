@@ -34,6 +34,9 @@ public class HotelsApplication implements CommandLineRunner {
 		hotelDAO.allHotelList();
 		hotelDAO.hotelMaxPList(s);
 		hotelDAO.hotelMinPList(s);
+		System.out.println();
+		System.out.println(usersDAO.userGrade("user03"));
+
 	}
 	public static void menu() {
 
