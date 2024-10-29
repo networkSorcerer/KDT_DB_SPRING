@@ -21,7 +21,7 @@ public class UsersDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
     public List<UsersVO> usersSelect(){     //관리자의 모든 유저 확인(이름순)
-        String sql = "SELECT * FROM EMP ORDER BY NAME";
+        String sql = "SELECT * FROM users ORDER BY NAME";
         return jdbcTemplate.query(sql, new UserRowMapper());
     }
     public List<UsersVO> findUserById(String userID) {
@@ -128,12 +128,12 @@ public class UsersDAO {
     @Override
         public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new UsersVO(
-                rs.getString("USERID"),
-                rs.getString("PASSWORD"),
-                rs.getString("NAME"),
+                rs.getString("userID"),
+                rs.getString("password"),
+                rs.getString("name"),
                 rs.getInt("age"),
-                rs.getString("EMAIL"),
-                rs.getInt("GRADE")
+                rs.getString("email"),
+                rs.getInt("grade")
             );
         }
     }
