@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class ReservationController {
 
     // 유저 예약 리스트
     @GetMapping("/userReservationList")
-    public String userReservationList(Model model){
-        List<ReservationVO> reserveList = reservationDAO.userReservationList();
+    public String userReservationList(Model model, HttpSession session){
+        List<ReservationVO> reserveList = reservationDAO.userReservationList(session.getId());
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }
