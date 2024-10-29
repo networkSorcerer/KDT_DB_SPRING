@@ -9,11 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewVO {
-    private int reviewID;
+public class HotelPriceVo {
     private int hotelID;
     private String hotelName;
-    private String userID;
-    private String content;
-    private int star;
+    private String hotelPhone;
+    private int hotelPriceMax;
+    private int hotelPriceMin;
 }

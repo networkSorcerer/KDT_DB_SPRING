@@ -32,6 +32,6 @@ public class HotelController {
         model.addAttribute("hotelName",hotelName);
         List<RoomVO> avaRoom = roomDAO.avaRoom(hotelId);
         model.addAttribute("avaRoom",avaRoom);
-        return "/HotelList/reserveHotel";
+        return "/HotelList/selectRoom";
     }
 }

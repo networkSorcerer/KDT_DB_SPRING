@@ -31,8 +31,8 @@ public class RoomDAO {
         @Override
         public RoomVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new RoomVO(
-                    rs.getInt("roomid"),
-                    rs.getInt("hotelid"),
+                    rs.getInt("roomID"),
+                    rs.getInt("hotelID"),
                     rs.getString("roomType"),
                     rs.getInt("price"),
                     rs.getInt("roomNumber")
