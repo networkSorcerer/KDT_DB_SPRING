@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 관리</title>
+</head>
+<body>
+<h2>유저 관리</h2>
+<table>
+    <tr>
+        <th>유저 ID</th>
+        <th>이름</th>
+        <th>나이</th>
+        <th>이메일</th>
+        <th>등급</th>
+        <th>등급 변경</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userID}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.grade == 1 ? '관리자' : '유저'}"></td>
+        <td>
+            <form th:action="@{'/admin/user/promote/' + ${user.userID}}" method="post">
+                <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'/admin/user/delete/' + ${user.userID}}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/admin/user/add">관리자 추가</a>
+</body>
+</html>

@@ -85,17 +85,14 @@ public class UsersDAO {
         }
         return result > 0;
     }
-    public String userLogin(String ID, String password) { // 로그인 성공시 ID값을 반환받아 로그인상태동안 사용-실험중
-        String name = null;
+    public UsersVO userLogin(String ID, String password) { // 로그인 성공시 유저 값을 반환받아 로그인상태동안 사용-실험중
         String query = "SELECT NAME FROM USERS WHERE USERID = ? AND PASSWORD = ?";
         try {
-            name = jdbcTemplate.queryForObject(query, String.class, ID, password);
+            return jdbcTemplate.queryForObject(query, new UserRowMapper(), ID, password);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            return null;
         }
-        return name;
     }
     public Integer userGrade(String ID) {
         int grade = 0;
