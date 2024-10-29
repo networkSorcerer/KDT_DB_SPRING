@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>호텔 수정</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 <h2>호텔 수정</h2>
-<form th:action="@{/admin/hotel/update}" method="post">
-    <input type="hidden" th:name="hotelID" th:value="${hotel.hotelID}"/>
+<form th:action="@{/admin/management/hotel/update/{hotelID}(hotelID=${hotel.hotelID})}" method="post" th:object="${hotel}">
+    <input type="hidden" th:field="*{hotelID}"/>
+
     <label for="hotelName">호텔 이름:</label>
-    <input type="text" id="hotelName" th:name="hotelName" th:value="${hotel.hotelName}" required/><br/>
+    <input type="text" id="hotelName" th:field="*{hotelName}" required/><br/>
 
     <label for="region">도시:</label>
-    <input type="text" id="region" th:name="region" th:value="${hotel.region}" required/><br/>
+    <input type="text" id="region" th:field="*{region}" required/><br/>
 
     <label for="phone">전화번호:</label>
-    <input type="text" id="phone" th:name="phone" th:value="${hotel.phone}" required/><br/>
+    <input type="text" id="phone" th:field="*{phone}" required/><br/>
 
     <label for="hotelExpl">설명:</label>
-    <textarea id="hotelExpl" th:name="hotelExpl" required>${hotel.hotelExpl}</textarea><br/>
+    <textarea id="hotelExpl" th:field="*{hotelExpl}" required></textarea><br/>
 
     <button type="submit">수정 완료</button>
 </form>
-<a href="/admin/hotel_management">돌아가기</a>
+<a href="/admin/management/hotel">돌아가기</a>
 </body>
 </html>
