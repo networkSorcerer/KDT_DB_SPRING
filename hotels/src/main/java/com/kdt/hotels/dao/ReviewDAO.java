@@ -25,8 +25,8 @@ public class ReviewDAO {
 
     // 유저 리뷰 수정
     public void userReviewUpdate(ReviewVO vo){
-        String sql = "UPDATE REVIEW SET CONTENT, START FROM REVIEWS WHERE REVIEWID = ?";
-        jdbcTemplate.update(sql, vo.getReviewID());
+        String sql = "UPDATE REVIEWS SET CONTENT = ?, STAR = ? WHERE REVIEWID = ?";
+        jdbcTemplate.update(sql, vo.getContent(), vo.getStar(), vo.getReviewID());
     }
   
     public List<ReviewVO> hotelReviewList(int hotelId) {

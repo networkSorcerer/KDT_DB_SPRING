@@ -7,7 +7,7 @@
 </head>
 <body class="container">
 <h2>리뷰 수정</h2>
-<form action="#" th:action="@{/review/userReviewUpdate}" method="post">
+<form action="@{/review/userReviewList}" th:action="@{/review/userReviewUpdate}" method="post">
   <label for="reviewID">리뷰번호</label>
   <input type="text" id="reviewID" name="reviewID" th:value="${reviewID}" readonly>
   <label for="hotelName">호텔명</label>
@@ -22,7 +22,10 @@
   </select>
   </label>
   <label for="content">내용</label>
-  <textarea id="content" name="content" th:value="${content}"></textarea>
+  <textarea id="content" name="content" th:text="${content}"></textarea>
+  <br>
+  <button type="submit">수정</button>
+  <button th:onclick="|location.href='@{/review/userReviewList}'|">취소</button>
 </form>
 </body>
 </html>
