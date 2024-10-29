@@ -81,7 +81,8 @@ public class ReservationController {
         vo.setEndDate(endDate);
         vo.setRoomid(roomID);
         model.addAttribute("reservationUpdate", vo);
-        reservationDAO.userReservationUpdate(vo);
-        return "thymeleaf/userReservationList";
+        boolean isSuccess = reservationDAO.userReservationUpdate(vo);
+        model.addAttribute("isSuccess", isSuccess);
+        return "thymeleaf/userReservationManage";
     }
 }
