@@ -6,6 +6,43 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="container">
+<h2>예약 수정</h2>
+<form action="#" th:action="@{/reserve/userReservationUpdate}" method="post">
+    <label for="reserveID">예약번호</label>
+    <input type="text" id="reserveID" name="reserveID" th:value="${reserveID}" readonly>
+    <label for="hotelName">호텔명</label>
+    <input type="text" id="hotelName" name="hotelName" th:value="${hotelName}" readonly>
+    <label for="startDate">체크 인</label>
+    <input type="date" id="startDate" name="startDate" required>
+    <label for="endDate">체크 아웃</label>
+    <input type="date" id="endDate" name="endDate" required>
 
+    <table>
+        <thead>
+        <tr>
+            <th>방 선택</th>
+            <th>room ID</th>
+            <th>호텔 ID</th>
+            <th>방 타입</th>
+            <th>가격</th>
+            <th>방 번호</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${avaRoom}">
+            <td>
+                <input type="radio" name="roomID" th:value="${room.roomID}" required>
+            </td>
+            <td th:text="${room.roomID}"></td>
+            <td th:text="${room.hotelID}"></td>
+            <td th:text="${room.roomType}"></td>
+            <td th:text="${room.price}"></td>
+            <td th:text="${room.roomNumber}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">수정</button>
+    <button th:onclick="|location.href='@{/reserve/userReservationList}'|">취소</button>
+</form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.kdt.hotels.dao;
 
+import com.kdt.hotels.mapper.LoginRowMapper;
 import com.kdt.hotels.vo.UsersVO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -84,15 +85,17 @@ public class UsersDAO {
         }
         return result > 0;
     }
-    public UsersVO userLogin(String ID, String password) { // 로그인 성공시 유저 값을 반환받아 로그인상태동안 사용-실험중
-        String query = "SELECT NAME FROM USERS WHERE USERID = ? AND PASSWORD = ?";
+
+    public UsersVO userLogin(String ID, String password) {
+        String query = "SELECT USERID, PASSWORD, name, grade FROM USERS WHERE USERID = ? AND PASSWORD = ?"; // 필요한 컬럼 추가
         try {
-            return jdbcTemplate.queryForObject(query, new UserRowMapper(), ID, password);
+            return jdbcTemplate.queryForObject(query, new LoginRowMapper(), ID, password);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No matching user found.");
-            return null;
+            return null; // 로그인 실패 시 null 반환
         }
     }
+
     public Integer userGrade(String ID) {
         int grade = 0;
         String query = "SELECT GRADE FROM USERS WHERE USERID = ?";

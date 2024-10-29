@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>리뷰 수정</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="container">
+<h2>리뷰 수정</h2>
+<form action="#" th:action="@{/review/userReviewUpdate}" method="post">
+  <label for="reviewID">리뷰번호</label>
+  <input type="text" id="reviewID" name="reviewID" th:value="${reviewID}" readonly>
+  <label for="hotelName">호텔명</label>
+  <input type="text" id="hotelName" name="hotelName" th:value="${hotelName}" readonly>
+  <label for="star">평점:
+  <select id="star" name="star" th:value="${star}">
+    <option value="5">5</option>
+    <option value="4">4</option>
+    <option value="3">3</option>
+    <option value="2">2</option>
+    <option value="1">1</option>
+  </select>
+  </label>
+  <label for="content">내용</label>
+  <textarea id="content" name="content" th:value="${content}"></textarea>
+</form>
+</body>
+</html>

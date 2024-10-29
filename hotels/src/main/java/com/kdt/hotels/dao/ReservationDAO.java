@@ -2,6 +2,7 @@ package com.kdt.hotels.dao;
 
 import com.kdt.hotels.mapper.ReservationRowMapper;
 import com.kdt.hotels.vo.ReservationVO;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,9 +28,15 @@ public class ReservationDAO {
     }
 
     // 유저 예약 수정
-    public void userReservationUpdate(ReservationVO vo){
+    public boolean userReservationUpdate(ReservationVO vo){
+        int result = 0;
         String sql = "UPDATE RESERVATION SET STARTDATE = ?, ENDDATE = ?, ROOMID = ? WHERE RESERVEID = ?";
-        jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
+        try{
+            result = jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result > 0;
     }
 
     public boolean reserveHotel(ReservationVO vo) {

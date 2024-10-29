@@ -15,24 +15,21 @@
     <th>호텔명</th>
     <th>평점</th>
     <th>내용</th>
-    <th>방번호</th>
-    <th>타입</th>
-    <th>가격</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="reserveList : ${reserveList}">
-    <td th:text="${reserveList.reserveID}"></td>
-    <td th:text="${reserveList.hotelID}"></td>
-    <td th:text="${reserveList.hotelName}"></td>
-    <td th:text="${reserveList.startDate}"></td>
-    <td th:text="${reserveList.endDate}"></td>
-    <td th:text="${reserveList.roomid}"></td>
-    <td th:text="${reserveList.roomtype}"></td>
-    <td th:text="${reserveList.price}"></td>
+  <tr th:each="reviewList : ${reviewList}">
+    <td>
+    <a th:href="@{/review/userReviewUpdate (reviewID=${reviewList.reviewID}, (hotelID=${reviewList.hotelID}, (hotelName=${reviewList.hotelName}, (star=${reviewList.star}, (content=${reviewList.content})}"
+       th:text="${reviewList.reviewID}"></a>
+    </td>
+    <td th:text="${reviewList.hotelID}"></td>
+    <td th:text="${reviewList.hotelName}"></td>
+    <td th:text="${reviewList.star}"></td>
+    <td th:text="${reviewList.content}"></td>
   </tr>
   </tbody>
 </table>
-<button th:onclick="|location.href='@{./}'|">뒤로</button>
+<button th:onclick="|location.href='@{/review/userReviewList}'|">뒤로</button>
 </body>
 </html>
