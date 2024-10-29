@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>삭제 확인</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 <h2>호텔 삭제 확인</h2>
-<p>정말로 <span th:text="${hotel.hotelName}"></span> 호텔을 삭제하시겠습니까?</p>
+<p>정말로 <span th:text="${hotel.get(0).hotelName}"></span> 호텔을 삭제하시겠습니까?</p>
 
-<form th:action="@{'/admin/hotel/delete/' + ${hotel.hotelID}}" method="post">
+<form th:action="@{/admin/management/hotel/delete/{hotelID}(hotelID=${hotel.get(0).hotelID})}" method="post">
     <button type="submit">삭제</button>
 </form>
-<a href="/admin/hotel_management">돌아가기</a>
+<a href="/admin/management/hotel/">돌아가기</a>
 </body>
 </html>

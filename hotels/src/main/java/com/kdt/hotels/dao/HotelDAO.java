@@ -124,11 +124,11 @@ public class HotelDAO {
             return null;
         }
     }
-    @Transactional
 
+    @Transactional
     public boolean hotelInsert(HotelVO hotel) {
         int result = 0;
-        String sql = "INSERT INTO HOTEL (HOTLEID, HOTELNAME, REGION, PHONE, HOTELEXPL) "+
+        String sql = "INSERT INTO HOTEL (HOTELID, HOTELNAME, REGION, PHONE, HOTELEXPL) "+
                 "VALUES (?, ?, ?, ?, ?)";
         try {
             result = jdbcTemplate.update(sql, hotel.getHotelID(),hotel.getHotelName(),hotel.getRegion(),hotel.getPhone(),hotel.getHotelExpl());
