@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/hotel")
+@RequestMapping("/reserve") //reservation
 public class ReservationController {
     private final ReservationDAO reservationDAO;
 
@@ -27,6 +27,22 @@ public class ReservationController {
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }
+    // 호텔 예약
+    @GetMapping("/reserveHotel")
+    public String insertViewReserve(Model model) {
+        ReservationVO reservationVO = new ReservationVO();
+        model.addAttribute("selectRoom", reservationVO);
+        System.out.println("ReservationVO added to model: " + reservationVO);
+        return "HotelList/selectRoom";
+    }
+
+    // 호텔 예약 결과
+    @PostMapping("/reserveHotel")
+    public String insertDBReserve (@ModelAttribute("selectRoom") ReservationVO empVO, Model model) {
+        boolean isSuccess = reservationDAO.reserveHotel(empVO);
+        model.addAttribute("isSuccess",isSuccess);
+        return "HotelList/reserveResult";
+    }
 
     // 유저 예약 수정 페이지
     @GetMapping("/userReservationUpdate")
@@ -36,8 +52,8 @@ public class ReservationController {
     }
 
     // 유저 에약 DB 수정
-    @PostMapping("/userReservationUpdate")
-    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
-        model.addAttribute()
-    }
+//    @PostMapping("/userReservationUpdate")
+//    public String userReservationDBUpdate(@ModelAttribute("reserveUpdate") ReservationVO reservationVO, Model model) {
+//        model.addAttribute()
+//    }
 }
