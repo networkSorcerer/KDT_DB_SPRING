@@ -31,4 +31,18 @@ public class ReservationDAO {
         String sql = "UPDATE RESERVATION SET STARTDATE = ?, ENDDATE = ?, ROOMID = ? WHERE RESERVEID = ?";
         jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
     }
+
+    public boolean reserveHotel(ReservationVO vo) {
+        int result = 0;
+        // SQL 문 수정
+        String sql = "INSERT INTO reservation (reserveid, userid, hotelid, roomid, startdate, enddate) VALUES (reservation_seq.nextval, ?, ?, ?, ?, ?)";
+        try {
+            // reserveID를 제거하고 나머지 매개변수만 사용
+            result = jdbcTemplate.update(sql, vo.getUserID(), vo.getHotelID(), vo.getRoomid(), vo.getStartDate(), vo.getEndDate());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
+    }
+
 }
