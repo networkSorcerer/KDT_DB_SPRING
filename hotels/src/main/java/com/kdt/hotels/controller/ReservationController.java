@@ -26,7 +26,8 @@ public class ReservationController {
     // 유저 예약 리스트
     @GetMapping("/userReservationList")
     public String userReservationList(Model model, HttpSession session){
-        List<ReservationVO> reserveList = reservationDAO.userReservationList(session.getId());
+        String userID = (String)session.getAttribute("userid");
+        List<ReservationVO> reserveList = reservationDAO.userReservationList(userID);
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }

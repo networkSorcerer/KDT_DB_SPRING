@@ -17,10 +17,11 @@ public class ReviewDAO {
     }
 
     // 유저 리뷰 관리
-    public List<ReviewVO> userReviewList(){
+    public List<ReviewVO> userReviewList(String userID){
         String sql = "SELECT R.REVIEWID, R.HOTELID, H.HOTELNAME, R.USERID, R.CONTENT, R.STAR " +
-                    "FROM REVIEWS R JOIN HOTEL H ON R.HOTELID = H.HOTELID";
-        return jdbcTemplate.query(sql, new ReviewRowMapper());
+                    "FROM REVIEWS R JOIN HOTEL H ON R.HOTELID = H.HOTELID " +
+                    "WHERE USERID = ?";
+        return jdbcTemplate.query(sql, new ReviewRowMapper(), userID);
     }
 
     // 유저 리뷰 수정

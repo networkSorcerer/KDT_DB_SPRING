@@ -45,7 +45,7 @@ public class LoginController {
             if (user.getGrade() == 1) {
                 return "redirect:/admin/management"; // redirect로 관리 페이지로 이동
             } else {
-                return "Main/LoginMain"; //
+                return "thymeleaf/myPage"; //
             }
         } else {
             logger.warn("Failed login attempt for username: {}", userid);
