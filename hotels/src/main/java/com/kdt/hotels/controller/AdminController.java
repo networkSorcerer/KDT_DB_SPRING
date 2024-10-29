@@ -66,13 +66,15 @@ public class AdminController {
         return "redirect:/admin/management/hotel";
     }
 
+    // 삭제 확인 페이지 이동
     @GetMapping("management/hotel/delete/{hotelID}")
     public String showDeleteConfirmation(@PathVariable("hotelID") String hotelID, Model model) {
         List<HotelVO> hotel = hotelDAO.findHotelById(hotelID); // 호텔 정보를 가져오는 메소드
         model.addAttribute("hotel", hotel);
-        return "admin/confirm_delete"; //
+        return "admin/confirm_delete"; // 삭제 확인 페이지로 이동
     }
 
+    // 실제 삭제 처리
     @PostMapping("management/hotel/delete/{hotelID}")
     public String deleteHotel(@PathVariable("hotelID") String hotelID) {
         hotelDAO.hotelDelete(hotelID); // 호텔 삭제 메소드
