@@ -28,17 +28,18 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(
-            @RequestParam("username") String username,
+            @RequestParam("userid") String userid,
             @RequestParam("password") String password,
             Model model,
             HttpSession session) {
 
         // 단일 UsersVO 객체를 가져옴
-        UsersVO user = usersDAO.userLogin(username, password);
+        UsersVO user = usersDAO.userLogin(userid, password);
         logger.info("Logged in user: ID = {}, Name = {}, Grade = {}", user.getUserID(), user.getName(), user.getGrade());
         model.addAttribute("user",user);
         if (user != null) {
-            session.setAttribute("username", user.getName());
+            session.setAttribute("name", user.getName());
+            session.setAttribute("userid", user.getUserID());
             session.setAttribute("grade", user.getGrade());
 
             if (user.getGrade() == 1) {
@@ -47,7 +48,34 @@ public class LoginController {
                 return "Main/LoginMain"; //
             }
         } else {
-            logger.warn("Failed login attempt for username: {}", username);
+            logger.warn("Failed login attempt for username: {}", userid);
+            model.addAttribute("loginError", "Invalid credentials");
+            return "redirect:/"; // 로그인 페이지로 다시 이동
+        }
+    }
+    @PostMapping("/login1")
+    public String login1(
+            @RequestParam("userid") String userid,
+            @RequestParam("password") String password,
+            Model model,
+            HttpSession session) {
+
+        // 단일 UsersVO 객체를 가져옴
+        UsersVO user = usersDAO.userLogin(userid, password);
+        logger.info("Logged in user: ID = {}, Name = {}, Grade = {}", user.getUserID(), user.getName(), user.getGrade());
+        model.addAttribute("user",user);
+        if (user != null) {
+            session.setAttribute("name", user.getName());
+            session.setAttribute("userid", user.getUserID());
+            session.setAttribute("grade", user.getGrade());
+
+            if (user.getGrade() == 1) {
+                return "redirect:/admin/management"; // redirect로 관리 페이지로 이동
+            } else {
+                return "hotel/selectRoom"; //
+            }
+        } else {
+            logger.warn("Failed login attempt for username: {}", userid);
             model.addAttribute("loginError", "Invalid credentials");
             return "redirect:/"; // 로그인 페이지로 다시 이동
         }
