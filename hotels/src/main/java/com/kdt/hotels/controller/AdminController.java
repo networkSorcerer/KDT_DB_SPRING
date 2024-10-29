@@ -1,9 +1,7 @@
 package com.kdt.hotels.controller;
 
 import com.kdt.hotels.dao.HotelDAO;
-import com.kdt.hotels.dao.UsersDAO;
 import com.kdt.hotels.vo.HotelVO;
-import com.kdt.hotels.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,63 +13,50 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final HotelDAO hotelDAO;
-    private final UsersDAO usersDAO;
-
     @Autowired
-    public AdminController(HotelDAO hotelDAO, UsersDAO usersDAO) {
-        this.hotelDAO = hotelDAO;
-        this.usersDAO = usersDAO;
-    }
+    private HotelDAO hotelDAO;
 
-    @GetMapping
-    public String adminPage(Model model) {
-        List<HotelVO> hotels = hotelDAO.hotelSelect();
-        List<UsersVO> users = usersDAO.usersSelect();
+    // 호텔 관리 페이지
+    @GetMapping("/hotel_management")
+    public String showHotelManagementPage(Model model) {
+        List<HotelVO> hotels = hotelDAO.hotelSelect();  // 모든 호텔 목록 조회
         model.addAttribute("hotels", hotels);
-        model.addAttribute("users", users);
-        return "admin";
+        return "admin/hotel_management";  // 해당 HTML 파일과 매핑
     }
 
-    // 호텔 삭제
-    @PostMapping("/deleteHotel")
-    public String deleteHotel(@RequestParam("hotelID") String hotelID) {
-        hotelDAO.hotelDelete(hotelID);
-        return "redirect:/admin";
+    // 호텔 추가 페이지 이동
+    @GetMapping("/hotel/add")
+    public String showAddHotelPage(Model model) {
+        model.addAttribute("hotel", new HotelVO());
+        return "admin/add_hotel";  // 추가 페이지로 이동
     }
 
-    // 사용자 삭제
-    @PostMapping("/deleteUser")
-    public String deleteUser(@RequestParam("userID") String userID) {
-        usersDAO.userDelete(userID);
-        return "redirect:/admin";
+    // 호텔 추가 처리
+    @PostMapping("/hotel/add")
+    public String addHotel(@ModelAttribute HotelVO hotel) {
+        hotelDAO.hotelInsert(hotel);
+        return "redirect:/admin/hotel_management";
     }
 
-    // 호텔 수정
-    @GetMapping("/editHotel/{hotelID}")
-    public String editHotelForm(@PathVariable("hotelID") String hotelID, Model model) {
-        HotelVO hotel = (HotelVO) hotelDAO.findHotelById(hotelID); // 추가한 findHotelById 메서드 사용
-        model.addAttribute("hotel", hotel);
-        return "editHotel";
+    // 호텔 수정 페이지 이동
+    @GetMapping("/hotel/update/{hotelID}")
+    public String showUpdateHotelPage(@PathVariable("hotelID") String hotelID, Model model) {
+        List<HotelVO> hotels = hotelDAO.findHotelById(hotelID);
+        if (!hotels.isEmpty()) {
+            model.addAttribute("hotel", hotels.get(0));
+        }
+        return "admin/update_hotel";  // 수정 페이지로 이동
     }
 
-    @PostMapping("/editHotel")
-    public String editHotelSubmit(HotelVO hotel) {
+    @PostMapping("/admin/hotel/update")
+    public String updateHotel(HotelVO hotel) {
         hotelDAO.hotelUpdate(hotel);
-        return "redirect:/admin";
+        return "redirect:/admin/hotel_management"; // 업데이트 후 리다이렉트
     }
 
-    // 사용자 수정
-    @GetMapping("/editUser/{userID}")
-    public String editUserForm(@PathVariable("userID") String userID, Model model) {
-        UsersVO user = (UsersVO) usersDAO.findUserById(userID); // 추가한 findUserById 메서드 사용
-        model.addAttribute("user", user);
-        return "editUser";
-    }
-
-    @PostMapping("/editUser")
-    public String editUserSubmit(UsersVO user) {
-        usersDAO.userUpdate(user);
-        return "redirect:/admin";
+    @PostMapping("/admin/hotel/delete/{id}")
+    public String deleteHotel(@PathVariable("id") int id) {
+        hotelDAO.hotelDelete(String.valueOf(id));
+        return "redirect:/admin/hotel_management"; // 삭제 후 리다이렉트
     }
 }
