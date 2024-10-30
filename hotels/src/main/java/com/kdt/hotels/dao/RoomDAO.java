@@ -73,7 +73,8 @@ public class RoomDAO {
     }
 
     public List<RoomVO> chooseRoom(ReservationVO reservation) {
-        String sql = "SELECT r.roomID, r.hotelID, r.price, r.roomNumber " +
+        String sql = "SELECT r.roomID, r.hotelID, r.price,r.roomType," +
+                "r.roomNumber " +
                 "FROM room r " +
                 "WHERE r.hotelID = ? " +
                 "AND NOT EXISTS ( " +
@@ -95,7 +96,7 @@ public class RoomDAO {
             System.out.println("SQL: " + sql);
             System.out.println("Parameters: " + reservation.getHotelID() + ", " + reservation.getEndDate() + ", " + reservation.getStartDate());
 
-            availableRooms = jdbcTemplate.query(sql, new Object[] {
+            availableRooms = jdbcTemplate.query(sql, new Object[]{
                     reservation.getHotelID(),
                     Date.valueOf(reservation.getEndDate().toLocalDate()),  // String -> Date로 변환
                     Date.valueOf(reservation.getStartDate().toLocalDate()) // String -> Date로 변환
@@ -121,7 +122,7 @@ public class RoomDAO {
         }
 
         return availableRooms;
-
+    }
     public void roomDelete(int roomID) {
         String sql = "DELETE ROOM WHERE ROOMID = ? ";
         try {
