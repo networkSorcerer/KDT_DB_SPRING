@@ -1,13 +1,11 @@
 package com.kdt.hotels.dao;
 
-import com.kdt.hotels.vo.HotelVO;
 import com.kdt.hotels.vo.RoomVO;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,6 +31,26 @@ public class RoomDAO {
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<RoomVO> selectRoom(int roomid) {
+        String sql="select * from room where roomid = ?";
+        try{
+            return jdbcTemplate.query(sql, new RoomRowMapper(),roomid );
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean roomUpdate(RoomVO vo) {
+        int result =0;
+        String sql = "update room set roomid =? hotelid=?,roomtype=?,price=?,roomnumber=?";
+        try{
+            result = jdbcTemplate.update(sql, vo.getRoomID(),vo.getHotelID(),vo.getRoomType(),vo.getPrice(),vo.getRoomNumber());
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return result > 0;
     }
 
     private static class RoomRowMapper implements RowMapper<RoomVO> {
