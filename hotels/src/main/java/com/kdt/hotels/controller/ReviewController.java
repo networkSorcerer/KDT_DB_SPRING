@@ -30,6 +30,13 @@ public class ReviewController {
         model.addAttribute("reviewList", reviewList);
         return "thymeleaf/userReviewManage";
     }
+    @PostMapping("/userReviewList")
+    public String userReviewListMove(Model model, HttpSession session){
+        String userID = (String)session.getAttribute("userid");
+        List<ReviewVO> reviewList = reviewDAO.userReviewList(userID);
+        model.addAttribute("reviewList", reviewList);
+        return "redirect:/review/userReviewList";
+    }
 
     //  유저 리뷰 수정 페이지
     @GetMapping("/userReviewUpdate")

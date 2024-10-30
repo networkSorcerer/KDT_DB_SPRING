@@ -31,6 +31,14 @@ public class ReservationController {
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }
+    @PostMapping("/userReservationList")
+    public String userReservationListMove(Model model, HttpSession session){
+        String userID = (String)session.getAttribute("userid");
+        List<ReservationVO> reserveList = reservationDAO.userReservationList(userID);
+        model.addAttribute("reserveList", reserveList);
+        return "redirect:/reserve/userReservationList";
+    }
+
     // 호텔 예약
     @GetMapping("/reserveHotel")
     public String insertViewReserve(Model model) {
@@ -70,9 +78,12 @@ public class ReservationController {
 
     // 유저 예약 수정 페이지
     @GetMapping("/userReservationUpdate")
-    public String userReservationUpdate(Model model, @RequestParam("reserveID") int reserveID, @RequestParam("hotelID") int hotelId, @RequestParam("hotelName") String hotelName){
+    public String userReservationUpdate(Model model, @RequestParam("reserveID") int reserveID, @RequestParam("hotelID") int hotelId, @RequestParam("hotelName") String hotelName, @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate, @RequestParam("roomid") int roomid){
         model.addAttribute("reserveID", reserveID);
         model.addAttribute("hotelName", hotelName);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("roomid", roomid);
         List<RoomVO> avaRoom = roomDAO.avaRoom(hotelId);
         model.addAttribute("avaRoom",avaRoom);
         return "thymeleaf/userReservationUpdate";
