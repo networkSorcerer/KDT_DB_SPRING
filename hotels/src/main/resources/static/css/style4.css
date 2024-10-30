@@ -1,0 +1,95 @@
+/* 기본 스타일 설정 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2c3e50; /* 어두운 배경색 */
+    color: #ecf0f1; /* 연한 텍스트 색 */
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* 컨테이너 설정 */
+.container {
+    max-width: 1200px; /* 최대 너비 */
+    margin: 20px auto; /* 중앙 정렬 및 여백 */
+    padding: 20px;
+    background-color: #34495e; /* 살짝 밝은 어두운 색상 */
+    border-radius: 8px; /* 모서리 둥글게 */
+}
+
+/* 제목 스타일 */
+h2 {
+    color: #e67e22; /* 오렌지 색상 */
+    margin-bottom: 10px; /* 아래쪽 여백 */
+}
+
+/* 폼 스타일 */
+form {
+    margin-bottom: 20px; /* 폼 간격 */
+}
+
+/* 라벨 스타일 */
+label {
+    display: block;
+    margin: 10px 0 5px; /* 위, 아래 여백 */
+}
+
+/* 입력 필드 스타일 */
+input[type="text"],
+input[type="number"],
+input[type="submit"],
+button {
+    width: 100%; /* 너비 100% */
+    padding: 10px; /* 패딩 */
+    margin: 5px 0; /* 여백 */
+    border: none; /* 테두리 없음 */
+    border-radius: 4px; /* 둥근 모서리 */
+}
+
+input[type="text"],
+input[type="number"] {
+    background-color: #ecf0f1; /* 입력 필드 배경색 */
+    color: #2c3e50; /* 텍스트 색상 */
+}
+
+/* 버튼 스타일 */
+button {
+    background-color: #e67e22; /* 버튼 배경색 */
+    color: #fff; /* 버튼 텍스트 색상 */
+    cursor: pointer; /* 커서 포인터 */
+    transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */
+}
+
+button:hover {
+    background-color: #d35400; /* 버튼 호버 시 색상 변화 */
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%; /* 테이블 너비 */
+    border-collapse: collapse; /* 경계 합치기 */
+    margin-top: 20px; /* 위쪽 여백 */
+}
+
+th,
+td {
+    padding: 10px; /* 패딩 */
+    text-align: left; /* 텍스트 정렬 */
+    border-bottom: 1px solid #bdc3c7; /* 아래 경계 */
+}
+
+th {
+    background-color: #2980b9; /* 헤더 배경색 */
+    color: #fff; /* 헤더 텍스트 색상 */
+}
+
+tr:hover {
+    background-color: #34495e; /* 행 호버 시 배경색 */
+}
+
+/* 버튼 컨테이너 스타일 */
+.button-container {
+    display: flex;
+    justify-content: space-between; /* 버튼 간격 조절 */
+    margin-top: 20px; /* 위쪽 여백 */
+}
