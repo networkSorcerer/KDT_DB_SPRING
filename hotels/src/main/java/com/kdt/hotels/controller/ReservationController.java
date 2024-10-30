@@ -46,14 +46,13 @@ public class ReservationController {
         return "HotelList/selectRoom";
     }
 
-    // 호텔 예약 결과
+    // 예약 가능한 방 조회
     @PostMapping("/reserveHotel")
     public String reserveHotel(
             @RequestParam("hotelId") int hotelId,
             @RequestParam("userid") String userid1,
             @RequestParam("startdate") String startDate,
             @RequestParam("enddate") String endDate,
-            @RequestParam("roomID") int roomId,
             Model model, HttpSession session) {
         String userid = (String) session.getAttribute("userid");
         if (userid == null && userid1 != null) {
@@ -66,14 +65,15 @@ public class ReservationController {
         reservation.setUserID(userid);
         reservation.setStartDate(Date.valueOf(startDate));
         reservation.setEndDate(Date.valueOf(endDate));
-        reservation.setRoomid(roomId);
 
 
         model.addAttribute("reservation", reservation);
-        boolean isSuccess = reservationDAO.reserveHotel(reservation);
-        model.addAttribute("isSuccess", isSuccess);
+        List<RoomVO>avaRooms =roomDAO.chooseRoom(reservation);
+        System.out.println("avaRooms"+avaRooms);
+        System.out.println("Available Rooms Count: " + avaRooms.size());
 
-        return "HotelList/reserveResult"; // Change this to your actual confirmation page
+        model.addAttribute("avaRooms",avaRooms);
+        return "HotelList/avaRoom"; // Change this to your actual confirmation page
     }
 
     // 유저 예약 수정 페이지

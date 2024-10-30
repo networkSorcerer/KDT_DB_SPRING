@@ -21,14 +21,19 @@ public class RoomController {
         List<RoomVO> hotelRoom = roomDAO.hotelRoom(hotelID);
 
         model.addAttribute("hotelRoom", hotelRoom);
-
+        model.addAttribute("hotelid",hotelID);
         return "/HotelList/RoomList"; // 뷰 경로가 올바른지 확인하세요.
     }
     @GetMapping("/select")
-    public String roomSelect(Model model, @RequestParam(value = "roomid", required = false) Integer roomid) {
+    public String roomSelect(Model model, @RequestParam(value = "roomid", required = false) Integer roomid,
+                             @RequestParam(value="hotelid", required = false)Integer hotelid) {
+        System.out.println("호텔 ID야 나타나라: " + hotelid);
+        System.out.println("room ID야 나타나라: " + roomid);
+
         if (roomid == null) {
-            // roomid가 null일 때는 방 추가(create) 페이지로 리다이렉트
+            model.addAttribute("hotelid",hotelid);
             return "HotelList/updateRoom"; // 방 추가 페이지 반환
+
         } else {
             // roomid가 있을 때는 방 수정 정보 조회
             List<RoomVO> selectRooms = roomDAO.selectRoom(roomid);
@@ -57,5 +62,7 @@ public class RoomController {
 
        return false;
    }
+
+
 
 }
