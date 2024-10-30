@@ -16,6 +16,8 @@
   <form action="#" th:action="@{/reserve/reserveHotel}" method="post"> <!-- 원래 reserveHotel-->
     <input type="hidden" name="hotelId" th:value="${hotelId}" />
     <input type="hidden" name="hotelName" th:value="${hotelName}"/>
+    <input type="hidden" name="userid" th:value="${userid}"/>
+
     <div th:if="${userid == null}">
 
       <label for="userid">ID:</label>
@@ -27,30 +29,6 @@
     <label for="enddate">체크 아웃</label>
     <input type="date" id="enddate" name="enddate" required>
 
-<!--    <table>-->
-<!--      <thead>-->
-<!--      <tr>-->
-<!--        <th>방 선택</th>-->
-<!--        <th>room ID</th>-->
-<!--        <th>호텔 ID</th>-->
-<!--        <th>방 타입</th>-->
-<!--        <th>가격</th>-->
-<!--        <th>방 번호</th>-->
-<!--      </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--      <tr th:each="room : ${avaRoom}">-->
-<!--        <td>-->
-<!--          <input type="radio" name="roomID" th:value="${room.roomID}" required>-->
-<!--        </td>-->
-<!--        <td th:text="${room.roomID}"></td>-->
-<!--        <td th:text="${room.hotelID}"></td>-->
-<!--        <td th:text="${room.roomType}"></td>-->
-<!--        <td th:text="${room.price}"></td>-->
-<!--        <td th:text="${room.roomNumber}"></td>-->
-<!--      </tr>-->
-<!--      </tbody>-->
-<!--    </table>-->
     <button type="submit">예약 가능한 방 조회</button>
   </form>
     </div>
