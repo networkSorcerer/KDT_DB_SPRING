@@ -10,33 +10,34 @@
 <table>
   <thead>
   <tr>
-    <th>예약번호</th>
-    <th>호텔번호</th>
-    <th>호텔명</th>
-    <th>체크인</th>
-    <th>체크아웃</th>
-    <th>방번호</th>
-    <th>타입</th>
-    <th>가격</th>
+    <th style="width: 80px;">예약번호</th>
+    <th style="width: 70px;">호텔번호</th>
+    <th style="width: 250px;">호텔명</th>
+    <th style="width: 100px;">체크인</th>
+    <th style="width: 100px;">체크아웃</th>
+    <th style="width: 60px;">방번호</th>
+    <th style="width: 70px;">타입</th>
+    <th style="width: 80px;">가격</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="reserveList : ${reserveList}">
 
-    <td th:text="${reserveList.reserveID}"></td>
-    <td th:text="${reserveList.hotelID}"></td>
+    <td th:text="${reserveList.reserveID}" style="text-align: right;"></td>
+    <td th:text="${reserveList.hotelID}" style="text-align: right;"></td>
       <td>
-        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName})}"
+        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName}, startDate=${reserveList.startDate}, endDate=${reserveList.endDate}, roomid=${reserveList.roomid})}"
            th:text="${reserveList.hotelName}"></a>
       </td>
-    <td th:text="${reserveList.startDate}"></td>
-    <td th:text="${reserveList.endDate}"></td>
-    <td th:text="${reserveList.roomid}"></td>
-    <td th:text="${reserveList.roomtype}"></td>
-    <td th:text="${reserveList.price}"></td>
+    <td th:text="${reserveList.startDate}" style="text-align: center;"></td>
+    <td th:text="${reserveList.endDate}" style="text-align: center;"></td>
+    <td th:text="${reserveList.roomid}" style="text-align: right;"></td>
+    <td th:text="${reserveList.roomtype}" style="text-align: right;"></td>
+    <td th:text="${reserveList.price}" style="text-align: right;"></td>
   </tr>
   </tbody>
 </table>
-<button th:onclick="|location.href='@{../}'|">뒤로</button>
+<br>
+<button type="submit" th:onclick="|location.href='/'|">뒤로</button>
 </body>
 </html>
