@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>방 수정</title>
+    <link rel="stylesheet" type="text/css" href="/css/style3.css">
+</head>
+<body>
+<h2>방 수정</h2>
+<form th:action="@{/admin/management/hotel/room/update/{roomID}(roomID=${room.roomID})}" th:object="${room}" method="post">
+    <input type="hidden" th:field="*{roomID}" />
+    <input type="hidden" name="hotelID" th:value="${hotelID}"/>
+    <label>방 타입:</label>
+    <input type="text" th:field="*{roomType}" required />
+    <label>가격:</label>
+    <input type="number" th:field="*{price}" required />
+    <label>방 번호:</label>
+    <input type="text" th:field="*{roomNumber}" required />
+    <button type="submit">수정</button>
+</form>
+<button th:onclick="'location.href=\'/admin/management/hotel/room/select?hotelID=' + ${hotelID} + '\''">취소</button>
+</body>
+</html>
