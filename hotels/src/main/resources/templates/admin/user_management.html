@@ -26,10 +26,10 @@
         <td th:text="${user.grade == 1 ? '관리자' : '유저'}"></td>
         <td>
             <div th:if="${session.userid != user.userID}">
-                <form th:action="@{/admin/management/user/promote/{userID}(userid=${user.userID})}" method="post" style="display:inline;">
+                <form th:action="@{/admin/management/user/promote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
                     <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
                 </form>
-                <form th:action="@{/admin/management/user/demote/{userID}(userid=${user.userID})}" method="post" style="display:inline;">
+                <form th:action="@{/admin/management/user/demote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
                     <button type="submit" th:if="${user.grade == 1}">일반 유저로 강등</button>
                 </form>
             </div>
