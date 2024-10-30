@@ -212,6 +212,11 @@ public class HotelDAO {
         }
     }
 
+    public List<HotelVO> hotelList4() {
+        String sql ="select * from hotel";
+        return jdbcTemplate.query(sql,new HotelRowMapper());
+    }
+
 
     public static class HotelRowMapper implements RowMapper<HotelVO> {
         @Override

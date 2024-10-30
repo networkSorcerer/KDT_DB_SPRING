@@ -17,14 +17,13 @@ public class ReservationDAO {
     }
 
     // 유저 예약 관리
-    public List<ReservationVO> userReservationList(){
-        String sql = "SELECT RE.RESERVEID , RE.USERID , RE.HOTELID , HO.HOTELNAME , " +
-                        "RE.STARTDATE , RE.ENDDATE , RE.ROOMID , RO.ROOMTYPE , RO.PRICE, RO.ROOMNUMBER " +
-                        "FROM RESERVATION RE JOIN HOTEL HO " +
-                                            "ON RE.HOTELID = HO.HOTELID " +
-                                            "JOIN ROOM RO " +
-                                            "ON RE.ROOMID = RO.ROOMID";
-        return jdbcTemplate.query(sql, new ReservationRowMapper());
+    public List<ReservationVO> userReservationList(String userID){
+        String sql = "SELECT RE.RESERVEID, RE.USERID, RE.HOTELID, HO.HOTELNAME, " +
+                        "RE.STARTDATE, RE.ENDDATE, RE.ROOMID, RO.ROOMTYPE, RO.PRICE, RO.ROOMNUMBER " +
+                        "FROM RESERVATION RE JOIN HOTEL HO ON RE.HOTELID = HO.HOTELID " +
+                                            "JOIN ROOM RO ON RE.ROOMID = RO.ROOMID " +
+                        "WHERE USERID = ?";
+        return jdbcTemplate.query(sql, new ReservationRowMapper(), userID);
     }
 
     // 유저 예약 수정
@@ -34,7 +33,7 @@ public class ReservationDAO {
         try{
             result = jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return result > 0;
     }
@@ -52,4 +51,15 @@ public class ReservationDAO {
         return result > 0;
     }
 
+    // 유저 예약 삭제
+    public boolean userReservationDelete(int reserveID){
+        int result = 0;
+        String sql = "DELETE RESERVATION WHERE RESERVEID = ?";
+        try {
+            result = jdbcTemplate.update(sql, reserveID);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
+    }
 }

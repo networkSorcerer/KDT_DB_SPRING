@@ -17,16 +17,17 @@ public class ReviewDAO {
     }
 
     // 유저 리뷰 관리
-    public List<ReviewVO> userReviewList(){
+    public List<ReviewVO> userReviewList(String userID){
         String sql = "SELECT R.REVIEWID, R.HOTELID, H.HOTELNAME, R.USERID, R.CONTENT, R.STAR " +
-                    "FROM REVIEWS R JOIN HOTEL H ON R.HOTELID = H.HOTELID";
-        return jdbcTemplate.query(sql, new ReviewRowMapper());
+                    "FROM REVIEWS R JOIN HOTEL H ON R.HOTELID = H.HOTELID " +
+                    "WHERE USERID = ?";
+        return jdbcTemplate.query(sql, new ReviewRowMapper(), userID);
     }
 
     // 유저 리뷰 수정
     public void userReviewUpdate(ReviewVO vo){
-        String sql = "UPDATE REVIEW SET CONTENT, START FROM REVIEWS WHERE REVIEWID = ?";
-        jdbcTemplate.update(sql, vo.getReviewID());
+        String sql = "UPDATE REVIEWS SET CONTENT = ?, STAR = ? WHERE REVIEWID = ?";
+        jdbcTemplate.update(sql, vo.getContent(), vo.getStar(), vo.getReviewID());
     }
   
     public List<ReviewVO> hotelReviewList(int hotelId) {
@@ -35,4 +36,9 @@ public class ReviewDAO {
         return jdbcTemplate.query(sql, new Review1RowMapper(), hotelId);
     }
 
+    // 유저 리뷰 삭제
+    public void userReviewDelete(int reviewID){
+        String sql = "DELETE REVIEWS WHERE REVIEWID = ?";
+        jdbcTemplate.update(sql, reviewID);
+    }
 }
