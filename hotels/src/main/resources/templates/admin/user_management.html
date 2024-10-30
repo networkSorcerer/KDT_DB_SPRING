@@ -25,18 +25,18 @@
         <td th:text="${user.email}"></td>
         <td th:text="${user.grade == 1 ? '관리자' : '유저'}"></td>
         <td>
-            <div th:if="${session.userID != user.userID}">
-                <form th:action="@{/admin/management/user/promote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
+            <div th:if="${session.userid != user.userID}">
+                <form th:action="@{/admin/management/user/promote/{userID}(userid=${user.userID})}" method="post" style="display:inline;">
                     <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
                 </form>
-                <form th:action="@{/admin/management/user/demote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
+                <form th:action="@{/admin/management/user/demote/{userID}(userid=${user.userID})}" method="post" style="display:inline;">
                     <button type="submit" th:if="${user.grade == 1}">일반 유저로 강등</button>
                 </form>
             </div>
-            <span th:if="${session.userID == user.userID}">본인의 계정입니다</span>
+            <span th:if="${session.userid == user.userID}">본인의 계정입니다</span>
         </td>
         <td>
-            <div th:if="${session.userID != user.userID}">
+            <div th:if="${session.userid != user.userID}">
                 <form th:action="@{/admin/management/user/delete/{userID}(userID=${user.userID})}" method="post">
                     <button type="submit">삭제</button>
                 </form>

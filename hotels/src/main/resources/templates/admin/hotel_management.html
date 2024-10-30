@@ -23,7 +23,11 @@
         <td th:text="${hotel.region}"></td>
         <td th:text="${hotel.phone}"></td>
         <td th:text="${hotel.hotelExpl}"></td>
-        <td><a th:href="@{'/admin/management/hotel/update/' + ${hotel.hotelID}}">수정</a></td>
+        <td>
+            <form th:action="@{'/admin/management/hotel/update/' + ${hotel.hotelID}}" method="get">
+                <button type="submit">수정</button>
+            </form>
+        </td>
         <td>
             <form th:action="@{'/admin/management/hotel/delete/' + ${hotel.hotelID}}" method="get">
                 <button type="submit">삭제</button>

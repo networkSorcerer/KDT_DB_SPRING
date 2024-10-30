@@ -38,8 +38,8 @@ public class LoginController {
         logger.info("Logged in user: ID = {}, Name = {}, Grade = {}", user.getUserID(), user.getName(), user.getGrade());
         model.addAttribute("user",user);
         if (user != null) {
-            session.setAttribute("userID", user.getUserID());
-            session.setAttribute("username", user.getName());
+            session.setAttribute("name", user.getName());
+            session.setAttribute("userid", user.getUserID());
             session.setAttribute("grade", user.getGrade());
 
             if (user.getGrade() == 1) {
