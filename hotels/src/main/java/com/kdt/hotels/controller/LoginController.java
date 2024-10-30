@@ -47,7 +47,7 @@ public class LoginController {
             } else if (user.getGrade() == 3) {
                 return "Main/mainMenu";
             }else {
-                return "Main/LoginMain"; //
+                return "Main/Main"; //
             }
         } else {
             logger.warn("Failed login attempt for username: {}", userid);

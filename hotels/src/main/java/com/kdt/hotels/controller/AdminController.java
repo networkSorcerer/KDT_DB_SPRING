@@ -1,8 +1,10 @@
 package com.kdt.hotels.controller;
 
 import com.kdt.hotels.dao.HotelDAO;
+import com.kdt.hotels.dao.RoomDAO;
 import com.kdt.hotels.dao.UsersDAO;
 import com.kdt.hotels.vo.HotelVO;
+import com.kdt.hotels.vo.RoomVO;
 import com.kdt.hotels.vo.UsersVO;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private UsersDAO usersDAO;
+
+    @Autowired
+    private RoomDAO roomDAO;
 
     // 관리자 메인 페이지
     @GetMapping("/management")
@@ -84,6 +90,59 @@ public class AdminController {
         hotelDAO.hotelDelete(hotelID); // 호텔 삭제 메소드
         return "redirect:/admin/management/hotel"; // 관리 페이지로 리다이렉트
     }
+    // 호텔관리 리스트에서 방관리 리스트로
+    @GetMapping("/management/hotel/room/select")
+    public String showRoomList(@RequestParam("hotelID") int hotelID, Model model) {
+        System.out.println("Hotel ID received: " + hotelID);
+
+        List<RoomVO> rooms = roomDAO.hotelRoom(hotelID);
+        System.out.println("Rooms found: " + rooms.size());
+
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("hotelID", hotelID);
+        return "admin/room_management";
+    }
+    // 방 추가 페이지 이동
+    @GetMapping("/management/hotel/room/add")
+    public String showAddRoomPage(@RequestParam("hotelID") int hotelID, Model model) {
+        RoomVO room = new RoomVO();
+        room.setHotelID(hotelID);
+        model.addAttribute("room", room);
+        model.addAttribute("hotelID", hotelID); //취소 버튼에 필요
+        return "admin/add_room";
+    }
+    @PostMapping("/management/hotel/room/add")
+    public String addRoom(@ModelAttribute RoomVO room) {
+        roomDAO.roomPlus(room);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + room.getHotelID();
+    }
+
+    // 방 수정 페이지 이동
+    @GetMapping("/management/hotel/room/update/{roomID}")
+    public String showUpdateRoomPage(@PathVariable("roomID") int roomID, @RequestParam("hotelID") int hotelID, Model model) {
+        RoomVO room = roomDAO.selectRoom(roomID).get(0);
+        model.addAttribute("room", room);
+        model.addAttribute("hotelID", hotelID); // 돌아가기 버튼에 필요
+        return "admin/update_room";
+    }
+
+    @PostMapping("/management/hotel/room/update/{roomID}")
+    public String updateRoom(@ModelAttribute RoomVO room, @RequestParam("hotelID") int hotelID, Model model) {
+        System.out.println("Updating Room: " + room);  // RoomVO의 toString() 메소드를 오버라이드 하거나, 각 필드 출력
+        roomDAO.roomUpdate(room);
+        model.addAttribute("hotelID", hotelID);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + hotelID;
+    }
+
+    // 방 삭제 처리
+    @PostMapping("/management/hotel/room/delete/{roomID}")
+    public String deleteRoom(@PathVariable("roomID") int roomID, @RequestParam("hotelID") int hotelID, Model model) {
+        roomDAO.roomDelete(roomID); // 방 삭제 메소드
+        model.addAttribute("hotelID", hotelID);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + hotelID;
+    }
+
+
 
     // 유저 관리 페이지
     @GetMapping("/management/user")
@@ -114,6 +173,15 @@ public class AdminController {
         usersDAO.userToManagerUpdate(user);
         return "redirect:/admin/management/user";
     }
+    // 유저 등급 강등 처리 (관리자를 일반 유저 등급으로)
+    @PostMapping("/management/user/demote/{userID}")
+    public String demoteUser(@PathVariable("userID") String userID) {
+        UsersVO user = new UsersVO();
+        user.setUserID(userID);
+        user.setGrade(0);  // 일반 유저로 강등
+        usersDAO.userToManagerUpdate(user);
+        return "redirect:/admin/management/user";
+    }
 
     // 관리자 유저 추가 페이지 이동
     @GetMapping("/management/user/add")
@@ -125,17 +193,24 @@ public class AdminController {
     // 관리자 유저 추가 처리
     @PostMapping("management/user/add")
     public String addAdminUser(@ModelAttribute UsersVO user, Model model) {
-        try {
-            user.setGrade(1);  // 관리자 권한 설정
-            usersDAO.ManagerInsert(user);
-            return "redirect:/admin/management/user"; // 올바른 리디렉션 URL
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("errorMessage", e.getMessage()); // 오류 메시지 추가
-            model.addAttribute("user", user); // 입력된 데이터 유지
-            return "admin/add_user"; // 입력 페이지로 돌아가기
-        } catch (Exception e) {
-            System.err.println("Error adding admin user: " + e.getMessage());
-            return "redirect:/admin/management/user"; // 오류 발생 시에도 페이지 리디렉션
+        user.setGrade(1); // 기본 등급을 1(관리자)로 설정
+
+        if (usersDAO.checkUserIDExists(user.getUserID())) { // 중복 확인
+            model.addAttribute("errorMessage", "아이디가 중복됩니다. 다른 아이디를 입력해 주세요.");
+            return "admin/add_user"; // 중복 아이디일 경우 다시 회원가입 페이지로 이동
         }
+        if (usersDAO.ManagerInsert(user)) {
+            model.addAttribute("successMessage", "회원가입 성공!");
+            return "redirect:/admin/management/user"; // 성공 시 메인 페이지로 리다이렉트
+        } else {
+            model.addAttribute("errorMessage", "회원가입 실패");
+            return "admin/add_user"; // 실패 시 다시 회원가입 페이지로 이동
+        }
+    }
+    // 간단한 로그아웃 처리
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/"; // 메인 페이지로 리다이렉트
     }
 }

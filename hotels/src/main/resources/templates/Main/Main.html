@@ -6,22 +6,26 @@
   <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<div class="sidebar">
+<!-- 세션값이 없을 때 -->
+<div class="sidebar" th:unless="${session.userid} != null">
   <h2>로그인</h2>
-
   <form th:action="@{/login/login}" method="post">
-
     <label for="userid">사용자 ID:</label>
     <input type="text" id="userid" name="userid" required>
     <br>
-
     <label for="password">비밀번호:</label>
     <input type="password" id="password" name="password" required>
-
     <button type="submit">로그인</button>
   </form>
 
-  <button onclick="location.href='@{/signup}'">회원 가입</button>
+  <button onclick="location.href='/signup'">회원 가입</button>
+</div>
+<!-- 세션값이 있을 때 -->
+<div class="sidebar" th:if="${session.userid} != null">
+  <h4 style="text-align: right;"><span th:text="${session.name}"></span>님 환영합니다.</h4>
+  <button onclick="location.href='/reserve/userReservationList'">예약 관리</button>
+  <button onclick="location.href='/review/userReviewList'">리뷰 관리</button>
+  <button onclick="location.href='/logout'">로그아웃</button>
 </div>
 
 <div class="content">

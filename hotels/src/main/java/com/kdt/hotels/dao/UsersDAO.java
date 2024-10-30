@@ -45,6 +45,11 @@ public class UsersDAO {
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userID);
         return count != null && count > 0;
     }
+    public boolean checkUserIDExists(String userID) {
+        String sql = "SELECT COUNT(*) FROM users WHERE userID = ?";
+        int count = jdbcTemplate.queryForObject(sql, new Object[]{userID}, Integer.class);
+        return count > 0; // 중복되면 true 반환
+    }
 
     public boolean UserInsert(UsersVO user) {
         if (userExists(user.getUserID())) {     // 아이디 중복 확인 체크
@@ -52,8 +57,9 @@ public class UsersDAO {
             return false;
         }
 
+
         int result = 0;
-        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL,GRADE) VALUES (?,?,?,?,?,0)";   //유저 정보 등록시 그레이드는 자동으로 0 = 체크 불필요
+        String sql = "INSERT INTO USERS (USERID, PASSWORD, NAME, AGE, EMAIL, GRADE) VALUES (?,?,?,?,?,0)";   //유저 정보 등록시 그레이드는 자동으로 0 = 체크 불필요
         try {
             result = jdbcTemplate.update(sql, user.getUserID(), user.getPassword(), user.getName(), user.getAge(), user.getEmail());
         } catch (Exception e) {

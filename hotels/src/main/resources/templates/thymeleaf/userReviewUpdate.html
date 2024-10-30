@@ -9,24 +9,24 @@
 <h2>리뷰 수정</h2>
 <form action="@{/review/userReviewList}" th:action="@{/review/userReviewUpdate}" method="post">
   <label for="reviewID">리뷰번호</label>
-  <input type="text" id="reviewID" name="reviewID" th:value="${reviewID}" readonly>
+  <input type="text" id="reviewID" name="reviewID" th:value="${reviewID}" style="width: 480px" readonly>
   <label for="hotelName">호텔명</label>
-  <input type="text" id="hotelName" name="hotelName" th:value="${hotelName}" readonly>
+  <input type="text" id="hotelName" name="hotelName" th:value="${hotelName}" style="width: 480px" readonly>
   <label for="star">평점:
   <select id="star" name="star" th:value="${star}">
-    <option value="5">5</option>
-    <option value="4">4</option>
-    <option value="3">3</option>
-    <option value="2">2</option>
-    <option value="1">1</option>
+    <option value="5" th:selected="${star == 5}">5</option>
+    <option value="4" th:selected="${star == 4}">4</option>
+    <option value="3" th:selected="${star == 3}">3</option>
+    <option value="2" th:selected="${star == 2}">2</option>
+    <option value="1" th:selected="${star == 1}">1</option>
   </select>
   </label>
   <label for="content">내용</label>
-  <textarea id="content" name="content" th:text="${content}"></textarea>
+  <textarea id="content" name="content" th:text="${content}" style="width: 500px; height: 80px"></textarea>
   <br>
   <button type="submit">수정</button>
   <button type="submit" th:formaction="@{/review/userReviewDelete}">삭제</button>
-  <button th:onclick="|location.href='@{/review/userReviewList}'|">취소</button>
+  <button type="submit" th:formaction="@{/review/userReviewList}">취소</button>
 </form>
 </body>
 </html>
