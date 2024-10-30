@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomVO {
-    private int roomID;
+    private Integer roomID;
     private int hotelID;
     private String roomType;
     private int price;
