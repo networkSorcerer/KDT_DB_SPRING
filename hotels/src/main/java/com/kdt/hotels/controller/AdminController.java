@@ -114,6 +114,15 @@ public class AdminController {
         usersDAO.userToManagerUpdate(user);
         return "redirect:/admin/management/user";
     }
+    // 유저 등급 강등 처리 (관리자를 일반 유저 등급으로)
+    @PostMapping("/management/user/demote/{userID}")
+    public String demoteUser(@PathVariable("userID") String userID) {
+        UsersVO user = new UsersVO();
+        user.setUserID(userID);
+        user.setGrade(0);  // 일반 유저로 강등
+        usersDAO.userToManagerUpdate(user);
+        return "redirect:/admin/management/user";
+    }
 
     // 관리자 유저 추가 페이지 이동
     @GetMapping("/management/user/add")
