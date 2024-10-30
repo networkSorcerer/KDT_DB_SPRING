@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hotels</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div class="form-container">
+    <h1>변경 결과</h1>
+    <!-- Success Message -->
+    <div th:if="${isSuccess}" class="success">
+        방 변경 성공
+    </div>
+
+    <!-- Failure Message -->
+    <div th:if="${!isSuccess}" class="failure">
+        방 변경 실패
+    </div>
+
+    <a href="/">지역 조회 화면으로 이동</a>
+
+</div>
+</body>
+</html>
