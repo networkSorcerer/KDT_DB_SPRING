@@ -10,14 +10,17 @@
   <h2>호텔 예약</h2>
   <p>호텔 ID: <span th:text="${hotelId}"></span></p>
   <p>호텔 이름: <span th:text="${hotelName}"></span></p>
+  <p>회원 ID : <span th:text="${userid != null ? userid : '로그인 필요'}"></span></p>
+
 
   <form action="#" th:action="@{/reserve/reserveHotel}" method="post">
     <input type="hidden" name="hotelId" th:value="${hotelId}" />
     <input type="hidden" name="hotelName" th:value="${hotelName}"/>
+    <div th:if="${userid == null}">
 
-    <label for="userID">회원ID 입력</label>
-    <input type="text" id="userID" name="userID" th:value="${userID}" required>
-
+      <label for="userid">ID:</label>
+      <input type="text" id="userid" name="userid" required>
+    </div>
     <label for="startdate">체크 인</label>
     <input type="date" id="startdate" name="startdate" required>
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class ReservationController {
 
     // 유저 예약 리스트
     @GetMapping("/userReservationList")
-    public String userReservationList(Model model){
-        List<ReservationVO> reserveList = reservationDAO.userReservationList();
+    public String userReservationList(Model model, HttpSession session){
+        String userID = (String)session.getAttribute("userid");
+        List<ReservationVO> reserveList = reservationDAO.userReservationList(userID);
         model.addAttribute("reserveList", reserveList);
         return "thymeleaf/userReservationManage";
     }
@@ -40,16 +42,20 @@ public class ReservationController {
     @PostMapping("/reserveHotel")
     public String reserveHotel(
             @RequestParam("hotelId") int hotelId,
-            @RequestParam("userID") String userID,
+            @RequestParam("userid") String userid1,
             @RequestParam("startdate") String startDate,
             @RequestParam("enddate") String endDate,
             @RequestParam("roomID") int roomId,
-            Model model) {
+            Model model, HttpSession session) {
+        String userid = (String) session.getAttribute("userid");
+        if (userid == null && userid1 != null) {
+            userid = userid1;
+        }
 
         // Create a ReservationVO object and set the properties
         ReservationVO reservation = new ReservationVO();
         reservation.setHotelID(hotelId);
-        reservation.setUserID(userID);
+        reservation.setUserID(userid);
         reservation.setStartDate(Date.valueOf(startDate));
         reservation.setEndDate(Date.valueOf(endDate));
         reservation.setRoomid(roomId);
@@ -72,7 +78,7 @@ public class ReservationController {
         return "thymeleaf/userReservationUpdate";
     }
 
-    // 유저 에약 DB 수정
+    // 유저 예약 수정 DB
     @PostMapping("/userReservationUpdate")
     public String userReservationDBUpdate(@RequestParam("reserveID") int reserveID, @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate, @RequestParam("roomID") int roomID, Model model) {
         ReservationVO vo = new ReservationVO();
@@ -81,8 +87,15 @@ public class ReservationController {
         vo.setEndDate(endDate);
         vo.setRoomid(roomID);
         model.addAttribute("reservationUpdate", vo);
-        boolean isSuccess = reservationDAO.userReservationUpdate(vo);
-        model.addAttribute("isSuccess", isSuccess);
-        return "thymeleaf/userReservationManage";
+        reservationDAO.userReservationUpdate(vo);
+        return "redirect:/reserve/userReservationList";
+    }
+
+    // 유저 예약 삭제
+    @PostMapping("/userReservationDelete")
+    public String userReservationDelete(Model model, @RequestParam("reserveID") int reserveID){
+        model.addAttribute("reservationDelete", reserveID);
+        reservationDAO.userReservationDelete(reserveID);
+        return "redirect:/reserve/userReservationList";
     }
 }

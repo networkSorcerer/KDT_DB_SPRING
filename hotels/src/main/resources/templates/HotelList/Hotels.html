@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Hotels</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<div class="form-container">
+  <table>
+    <tr th:each="hotel : ${hotelList}">
+      <td th:text="${hotel.hotelID}"></td>
+      <td th:text="${hotel.hotelName}"></td>
+      <td th:text="${hotel.region}"></td>
+      <td th:text="${hotel.hotelExpl}"></td>
+      <td>
+        <a th:href="'/room/hotelRoom/' + ${hotel.hotelID}">방보기</a>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
