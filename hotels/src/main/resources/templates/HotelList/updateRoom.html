@@ -8,9 +8,9 @@
 <body>
 <div class="form-container">
   <h1 th:text="${selectRoom != null} ? '방 업데이트' : '방 추가'"></h1>
-  <form th:action="@{/room/update}" method="post">
+  <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
     <input type="hidden" th:if="${selectRoom != null}" th:name="roomid" th:value="${selectRoom.roomID}"/>
-
+    <input type="hidden" th:if="${selectRoom ! =null" th:name="hotelid" th:value="${selectRoom.hotelID"/>
     <table>
       <tbody>
       <tr>
@@ -18,13 +18,14 @@
         <td th:text="${selectRoom != null} ? ${selectRoom.roomID} : ''"></td>
       </tr>
       <tr>
+        <td>호텔 ID:</td>
+        <td><input  th:text="${selectRoom != null} ? ${selectRoom.hotelID} : ''" /></td>
+      </tr>
+      <tr>
         <td>방 유형:</td>
         <td><input type="text" th:name="roomType" th:value="${selectRoom != null} ? ${selectRoom.roomType} : ''" required/></td>
       </tr>
-      <tr>
-        <td>호텔 ID:</td>
-        <td><input type="text" th:name="hotelID" th:value="${selectRoom != null} ? ${selectRoom.hotelID} : ''" required/></td>
-      </tr>
+
       <tr>
         <td>가격:</td>
         <td><input type="number" th:name="price" th:value="${selectRoom != null} ? ${selectRoom.price} : ''" required/></td>

@@ -37,12 +37,21 @@ public class RoomController {
             return "HotelList/updateRoom"; // 방 수정 페이지 반환
         }
     }
-    @GetMapping("/update")
-    public String roomUpdate(@ModelAttribute RoomVO vo){
-        roomDAO.roomUpdate(vo);
+    @PostMapping("/update")
+    public String roomUpdate(@ModelAttribute RoomVO vo, Model model) {
+        boolean isSuccess; // 변수 선언
 
-        return "HotelList/roomResult";
+        if (vo.getRoomID() != null) { // null 체크를 올바르게 수정
+            isSuccess = roomDAO.roomUpdate(vo); // 방 수정
+        } else {
+            isSuccess = roomDAO.roomPlus(vo); // 방 추가
+        }
+
+        model.addAttribute("isSuccess", isSuccess);
+        return "HotelList/roomResult"; // 업데이트 결과 페이지 반환
     }
+
+
     @GetMapping("/delete")
     public boolean roomDelete(Model model){
 
