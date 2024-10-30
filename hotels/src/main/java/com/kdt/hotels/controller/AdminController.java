@@ -135,17 +135,18 @@ public class AdminController {
     // 관리자 유저 추가 처리
     @PostMapping("management/user/add")
     public String addAdminUser(@ModelAttribute UsersVO user, Model model) {
-        try {
-            user.setGrade(1);  // 관리자 권한 설정
-            usersDAO.ManagerInsert(user);
-            return "redirect:/admin/management/user"; // 올바른 리디렉션 URL
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("errorMessage", e.getMessage()); // 오류 메시지 추가
-            model.addAttribute("user", user); // 입력된 데이터 유지
-            return "admin/add_user"; // 입력 페이지로 돌아가기
-        } catch (Exception e) {
-            System.err.println("Error adding admin user: " + e.getMessage());
-            return "redirect:/admin/management/user"; // 오류 발생 시에도 페이지 리디렉션
+        user.setGrade(1); // 기본 등급을 1(관리자)로 설정
+
+        if (usersDAO.checkUserIDExists(user.getUserID())) { // 중복 확인
+            model.addAttribute("errorMessage", "아이디가 중복됩니다. 다른 아이디를 입력해 주세요.");
+            return "admin/add_user"; // 중복 아이디일 경우 다시 회원가입 페이지로 이동
+        }
+        if (usersDAO.ManagerInsert(user)) {
+            model.addAttribute("successMessage", "회원가입 성공!");
+            return "redirect:/admin/management/user"; // 성공 시 메인 페이지로 리다이렉트
+        } else {
+            model.addAttribute("errorMessage", "회원가입 실패");
+            return "admin/add_user"; // 실패 시 다시 회원가입 페이지로 이동
         }
     }
     // 간단한 로그아웃 처리
