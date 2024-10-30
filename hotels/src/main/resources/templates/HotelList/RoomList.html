@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -7,9 +7,9 @@
 </head>
 <body>
 <div class="form-container">
-  <button>방 추가</button>
+  <button onclick="location.href='/room/select(hotelID=${hotelRoom.hotelID}'">방 추가</button>
   <table>
-  <thead>
+    <thead>
     <tr>
       <th>room id</th>
       <th>room type</th>
@@ -19,7 +19,7 @@
       <th></th>
       <th></th>
     </tr>
-  </thead>
+    </thead>
     <tbody>
     <tr th:each="room : ${hotelRoom}">
       <td th:text="${room.roomID}"></td>
@@ -27,8 +27,8 @@
       <td th:text="${room.hotelID}"></td>
       <td th:text="${room.price}"></td>
       <td th:text="${room.roomNumber}"></td>
-      <td>방수정</td>
-      <td>방삭제</td>
+      <td><a th:href="@{/room/select(roomid=${room.roomID})}">방 수정</a></td>
+      <td><a th:href="'/room/delete/' + ${room.roomID}">방 삭제</a></td>
     </tr>
     </tbody>
   </table>

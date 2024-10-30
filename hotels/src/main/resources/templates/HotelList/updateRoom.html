@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>방 업데이트 및 추가</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="form-container">
+  <h1 th:text="${selectRoom != null} ? '방 업데이트' : '방 추가'"></h1>
+  <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
+    <input type="hidden" th:if="${selectRoom != null}" th:name="roomid" th:value="${selectRoom.roomID}"/>
+    <input type="hidden" th:if="${selectRoom ! =null" th:name="hotelid" th:value="${selectRoom.hotelID"/>
+    <table>
+      <tbody>
+      <tr>
+        <td>방 ID:</td>
+        <td th:text="${selectRoom != null} ? ${selectRoom.roomID} : ''"></td>
+      </tr>
+      <tr>
+        <td>호텔 ID:</td>
+        <td><input  th:text="${selectRoom != null} ? ${selectRoom.hotelID} : ''" /></td>
+      </tr>
+      <tr>
+        <td>방 유형:</td>
+        <td><input type="text" th:name="roomType" th:value="${selectRoom != null} ? ${selectRoom.roomType} : ''" required/></td>
+      </tr>
+
+      <tr>
+        <td>가격:</td>
+        <td><input type="number" th:name="price" th:value="${selectRoom != null} ? ${selectRoom.price} : ''" required/></td>
+      </tr>
+      <tr>
+        <td>방 번호:</td>
+        <td><input type="text" th:name="roomNumber" th:value="${selectRoom != null} ? ${selectRoom.roomNumber} : ''" required/></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button type="submit" th:text="${selectRoom != null} ? '방 수정' : '방 추가'"></button>
+  </form>
+</div>
+</body>
+</html>

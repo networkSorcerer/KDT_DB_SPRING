@@ -25,5 +25,10 @@
 
     <button type="submit">추가</button>
 </form>
+
+<div th:if="${successMessage}" style="color: green;" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" style="color: red;" th:text="${errorMessage}"></div>
+
+<button onclick="location.href='/admin/management/user'">돌아가기</button>
 </body>
 </html>

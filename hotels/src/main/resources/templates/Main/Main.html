@@ -17,7 +17,8 @@
     <input type="password" id="password" name="password" required>
     <button type="submit">로그인</button>
   </form>
-  <button onclick="location.href='@{/signup}'">회원 가입</button>
+
+  <button onclick="location.href='/signup'">회원 가입</button>
 </div>
 <!-- 세션값이 있을 때 -->
 <div class="sidebar" th:if="${session.userid} != null">
