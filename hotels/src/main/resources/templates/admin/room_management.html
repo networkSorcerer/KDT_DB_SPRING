@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Management</title>
+    <link rel="stylesheet" type="text/css" href="/css/style3.css">
+</head>
+<body>
+<h2>방 관리 - 호텔 ID: <span th:text="${hotelID}"></span></h2>
+<button th:onclick="'location.href=\'/admin/management/hotel/room/add?hotelID=' + ${hotelID} + '\''">방 추가</button>
+<button onclick="location.href='/admin/management/hotel'">호텔 관리로 돌아가기</button>
+<table>
+    <tr>
+        <th>방 ID</th>
+        <th>방 타입</th>
+        <th>가격</th>
+        <th>방 번호</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.roomID}"></td>
+        <td th:text="${room.roomType}"></td>
+        <td th:text="${room.price}"></td>
+        <td th:text="${room.roomNumber}"></td>
+        <td>
+            <form th:action="@{'/admin/management/hotel/room/update/' + ${room.roomID}}" method="get">
+                <input type="hidden" name="hotelID" th:value="${hotelID}" />
+                <button type="submit">수정</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'/admin/management/hotel/room/delete/' + ${room.roomID} + '?hotelID=' + ${hotelID}}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<button th:onclick="'location.href=\'/admin/management/hotel/room/add?hotelID=' + ${hotelID} + '\''">방 추가</button>
+<button onclick="location.href='/admin/management/hotel'">호텔 관리로 돌아가기</button>
+</body>
+</html>

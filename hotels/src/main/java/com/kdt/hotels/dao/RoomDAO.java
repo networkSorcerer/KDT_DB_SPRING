@@ -24,7 +24,7 @@ public class RoomDAO {
 
         return jdbcTemplate.query(sql, new RoomRowMapper(),hotelId);
     }
-    public List<RoomVO>hotelRoom(int hotelId){
+    public List<RoomVO> hotelRoom(int hotelId){
         String sql ="select * from room where hotelid = ?";
         try{
             return jdbcTemplate.query(sql, new RoomRowMapper(), hotelId);
@@ -69,6 +69,15 @@ public class RoomDAO {
         return result > 0;
     }
 
+    public void roomDelete(int roomID) {
+        String sql = "DELETE ROOM WHERE ROOMID = ? ";
+        try {
+            jdbcTemplate.update(sql, roomID);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
 
     private static class RoomRowMapper implements RowMapper<RoomVO> {
