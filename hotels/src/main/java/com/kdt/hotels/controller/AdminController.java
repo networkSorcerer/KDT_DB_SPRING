@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -146,5 +147,11 @@ public class AdminController {
             System.err.println("Error adding admin user: " + e.getMessage());
             return "redirect:/admin/management/user"; // 오류 발생 시에도 페이지 리디렉션
         }
+    }
+    // 간단한 로그아웃 처리
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/"; // 메인 페이지로 리다이렉트
     }
 }
