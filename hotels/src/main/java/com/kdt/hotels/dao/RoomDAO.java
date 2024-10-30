@@ -1,13 +1,16 @@
 package com.kdt.hotels.dao;
 
+import com.kdt.hotels.vo.ReservationVO;
 import com.kdt.hotels.vo.RoomVO;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -24,7 +27,7 @@ public class RoomDAO {
 
         return jdbcTemplate.query(sql, new RoomRowMapper(),hotelId);
     }
-    public List<RoomVO>hotelRoom(int hotelId){
+    public List<RoomVO> hotelRoom(int hotelId){
         String sql ="select * from room where hotelid = ?";
         try{
             return jdbcTemplate.query(sql, new RoomRowMapper(), hotelId);
@@ -69,6 +72,67 @@ public class RoomDAO {
         return result > 0;
     }
 
+    public List<RoomVO> chooseRoom(ReservationVO reservation) {
+        String sql = "SELECT r.roomID, r.hotelID, r.price,r.roomType," +
+                "r.roomNumber " +
+                "FROM room r " +
+                "WHERE r.hotelID = ? " +
+                "AND NOT EXISTS ( " +
+                "    SELECT 1 " +
+                "    FROM reservation v " +
+                "    WHERE v.roomid = r.roomid " +
+                "    AND ( " +
+                "        (v.startDate < ? AND " +
+                "         v.endDate > ?) " +
+                "    ) " +
+                ")";
+
+
+        List<RoomVO> availableRooms = new ArrayList<>();
+        System.out.println(reservation.getHotelID());
+        System.out.println(reservation.getStartDate());
+        System.out.println(reservation.getEndDate());
+        try {
+            System.out.println("SQL: " + sql);
+            System.out.println("Parameters: " + reservation.getHotelID() + ", " + reservation.getEndDate() + ", " + reservation.getStartDate());
+
+            availableRooms = jdbcTemplate.query(sql, new Object[]{
+                    reservation.getHotelID(),
+                    Date.valueOf(reservation.getEndDate().toLocalDate()),  // String -> Date로 변환
+                    Date.valueOf(reservation.getStartDate().toLocalDate()) // String -> Date로 변환
+            }, new RoomRowMapper() {
+                @Override
+                public RoomVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    RoomVO room = new RoomVO();
+                    room.setRoomID(rs.getInt("roomID"));
+                    room.setHotelID(rs.getInt("hotelID"));
+                    room.setRoomType(rs.getString("roomType"));
+                    room.setPrice(rs.getInt("price"));
+                    room.setRoomNumber(rs.getInt("roomNumber"));
+                    return room;
+                }
+            });
+        } catch (DataAccessException e) {
+            System.err.println("쿼리 실행 중 오류: " + e.getMessage());
+            if (e.getCause() instanceof SQLException) {
+                SQLException sqlException = (SQLException) e.getCause();
+                System.err.println("SQL State: " + sqlException.getSQLState());
+                System.err.println("Error Code: " + sqlException.getErrorCode());
+            }
+        }
+
+        return availableRooms;
+    }
+    public void roomDelete(int roomID) {
+        String sql = "DELETE ROOM WHERE ROOMID = ? ";
+        try {
+            jdbcTemplate.update(sql, roomID);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
     private static class RoomRowMapper implements RowMapper<RoomVO> {
