@@ -17,6 +17,7 @@
         <th>등급 변경</th>
         <th>삭제</th>
     </tr>
+
     <tr th:each="user : ${users}">
         <td th:text="${user.userID}"></td>
         <td th:text="${user.name}"></td>
@@ -24,20 +25,30 @@
         <td th:text="${user.email}"></td>
         <td th:text="${user.grade == 1 ? '관리자' : '유저'}"></td>
         <td>
-            <form th:action="@{/admin/management/user/promote/{userID}(userID=${user.userID})}" method="post">
-                <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
-            </form>
+            <div th:if="${session.userID != user.userID}">
+                <form th:action="@{/admin/management/user/promote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
+                    <button type="submit" th:if="${user.grade == 0}">관리자로 승격</button>
+                </form>
+                <form th:action="@{/admin/management/user/demote/{userID}(userID=${user.userID})}" method="post" style="display:inline;">
+                    <button type="submit" th:if="${user.grade == 1}">일반 유저로 강등</button>
+                </form>
+            </div>
+            <span th:if="${session.userID == user.userID}">본인의 계정입니다</span>
         </td>
         <td>
-            <form th:action="@{/admin/management/user/delete/{userID}(userID=${user.userID})}" method="post">
-                <button type="submit">삭제</button>
-            </form>
+            <div th:if="${session.userID != user.userID}">
+                <form th:action="@{/admin/management/user/delete/{userID}(userID=${user.userID})}" method="post">
+                    <button type="submit">삭제</button>
+                </form>
+            </div>
         </td>
     </tr>
 </table>
+
 <div class="button-container">
     <button onclick="location.href='/admin/management/user/add'">관리자 추가</button>
     <button onclick="location.href='/admin/management'">돌아가기</button>
 </div>
+
 </body>
 </html>
