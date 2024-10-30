@@ -42,7 +42,7 @@ public class HotelController {
         model.addAttribute("hotelName",hotelName);
 
         String userid = (String) session.getAttribute("userid");
-
+        session.setAttribute("hotelName",hotelName );
         logger.info("userid = {}",userid);
         List<RoomVO> avaRoom = roomDAO.avaRoom(hotelId);
         List<ReviewVO> hotelReview = reviewDAO.hotelReviewList(hotelId);
