@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" type="text/css" href="/css/style3.css">
 </head>
 <body>
 <div class="form-container">
-  <button onclick="location.href='/room/select(hotelID=${hotelRoom.hotelID}'">방 추가</button>
+  <a th:href="@{/room/select(hotelID=${hotelid})}">방 추가</a>
   <table>
     <thead>
     <tr>

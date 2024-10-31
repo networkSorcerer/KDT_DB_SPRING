@@ -35,9 +35,15 @@ public class UsersDAO {
         String query = "UPDATE USERS SET GRADE = ? WHERE USERID = ?";
         jdbcTemplate.update(query, user.getGrade(), user.getUserID());
     }
-    public void userUpdate(UsersVO user) {  // 유저의 개인정보 수정
-        String query = "UPDATE EMP SET PASSWORD=?, NAME=?, AGE=?, EMAIL=? WHERE USERID = ?";
-        jdbcTemplate.update(query, user.getPassword(),user.getName(),user.getAge(),user.getEmail(), user.getUserID());
+    public boolean userUpdate(UsersVO vo) {  // 유저의 개인정보 수정
+        int result = 0;
+        String query = "UPDATE USERS SET PASSWORD=?, NAME=?, AGE=?, EMAIL=? WHERE USERID = ?";
+        try {
+            result = jdbcTemplate.update(query, vo.getPassword(),vo.getName(),vo.getAge(),vo.getEmail(), vo.getUserID());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return result > 0;
     }
 
     public boolean userExists(String userID) {      // 유저 정보 등록 전 아이디 중복확인
@@ -126,6 +132,12 @@ public class UsersDAO {
             System.out.println(e.getMessage());
         }
         return name;
+    }
+
+    // 마이페이지
+    public UsersVO userMyPage(String userID){
+        String sql = "SELECT * FROM USERS WHERE USERID = ?";
+        return (UsersVO) jdbcTemplate.queryForObject(sql, new UserRowMapper(), userID);
     }
 
     private static class UserRowMapper implements RowMapper<UsersVO> {

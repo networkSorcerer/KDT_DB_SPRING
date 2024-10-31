@@ -22,6 +22,12 @@ public class HotelDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // 호텔ID 가져와서 호텔 정보 하나만 출력
+    public HotelVO hotelSelectOne(int hotelID){
+        String sql = "SELECT * FROM HOTEL WHERE HOTELID = ?";
+        return (HotelVO) jdbcTemplate.queryForObject(sql, new HotelRowMapper(), hotelID);
+    }
+
     public List<HotelVO> hotelSelect() {    //호텔의 모든 정보 뽑아오기(ID순 정렬)
         String sql = "SELECT * FROM HOTEL ORDER BY HOTELID";
         try {

@@ -15,4 +15,16 @@ public class RoomVO {
     private String roomType;
     private int price;
     private int roomNumber;
+
+    @Override
+    public String toString() {
+        return "RoomVO{" +
+                "roomID=" + roomID +
+                ", hotelID=" + hotelID +
+                ", roomType='" + roomType + '\'' +
+                ", price=" + price +
+                ", roomNumber=" + roomNumber +
+                '}';
+    }
+
 }

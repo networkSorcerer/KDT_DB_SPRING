@@ -41,39 +41,55 @@ public class ReservationController {
 
     // 호텔 예약
     @GetMapping("/reserveHotel")
-    public String insertViewReserve(Model model) {
+    public String insertViewReserve(Model model, HttpSession session) {
         model.addAttribute("selectRoom", new ReservationVO());
         return "HotelList/selectRoom";
     }
 
-    // 호텔 예약 결과
+    // 예약 가능한 방 조회
     @PostMapping("/reserveHotel")
     public String reserveHotel(
             @RequestParam("hotelId") int hotelId,
             @RequestParam("userid") String userid1,
             @RequestParam("startdate") String startDate,
             @RequestParam("enddate") String endDate,
-            @RequestParam("roomID") int roomId,
             Model model, HttpSession session) {
         String userid = (String) session.getAttribute("userid");
         if (userid == null && userid1 != null) {
             userid = userid1;
         }
+        // 세션에서 hotelName 가져오기
+        String hotelName1 = (String) session.getAttribute("hotelName");
 
+        // 모델에 hotelName 추가
+        model.addAttribute("hotelName1", hotelName1);
         // Create a ReservationVO object and set the properties
         ReservationVO reservation = new ReservationVO();
         reservation.setHotelID(hotelId);
         reservation.setUserID(userid);
         reservation.setStartDate(Date.valueOf(startDate));
         reservation.setEndDate(Date.valueOf(endDate));
-        reservation.setRoomid(roomId);
 
 
         model.addAttribute("reservation", reservation);
-        boolean isSuccess = reservationDAO.reserveHotel(reservation);
-        model.addAttribute("isSuccess", isSuccess);
+        List<RoomVO>avaRooms =roomDAO.chooseRoom(reservation);
+        System.out.println("avaRooms"+avaRooms);
+        System.out.println("Available Rooms Count: " + avaRooms.size());
 
-        return "HotelList/reserveResult"; // Change this to your actual confirmation page
+        model.addAttribute("avaRooms",avaRooms);
+        return "HotelList/avaRoom"; // Change this to your actual confirmation page
+    }
+    @PostMapping("/reserveRoom")
+    public String reserveHotel(Model model,ReservationVO vo){
+        System.out.println(vo.getHotelID());
+        System.out.println(vo.getRoomid());
+        System.out.println(vo.getUserID());
+        System.out.println(vo.getStartDate());
+        System.out.println(vo.getEndDate());
+
+        boolean isSuccess = reservationDAO.reserveHotel(vo);
+        model.addAttribute("isSuccess",isSuccess);
+        return "HotelList/reserveResult";
     }
 
     // 유저 예약 수정 페이지
