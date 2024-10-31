@@ -9,10 +9,8 @@ import com.kdt.hotels.vo.ReservationVO;
 import com.kdt.hotels.vo.ReviewVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -111,5 +109,31 @@ public class ReviewController {
         model.addAttribute("reviewID", reviewID);
         reviewDAO.userReviewDelete(reviewID);
         return "redirect:/review/userReviewList";
+    }
+    @GetMapping("/hotelReview")
+    public String insertViewReview(Model model){
+        model.addAttribute("review", new ReviewVO());
+        return "/HotelList/selectRoom";
+    }
+    @PostMapping("/hotelReview")
+    public String hoteReview(Model model, RedirectAttributes redirectAttributes,
+                             @RequestParam("hotelId") int hotelId,
+                             @RequestParam("userid") String userid,
+                             @RequestParam("content") String content,
+                             @RequestParam("star") int star) {
+        ReviewVO review = new ReviewVO();
+        review.setHotelID(hotelId);
+        review.setUserID(userid);
+        review.setContent(content);
+        review.setStar(star);
+        //boolean checkReserve =
+        boolean isSuccess = reviewDAO.reviewWrite(review);
+        model.addAttribute("isSuccess", isSuccess);
+        model.addAttribute("review", review);
+        redirectAttributes.addAttribute("hotelId", hotelId); // 호텔 ID 추가
+        redirectAttributes.addAttribute("hotelName", "호텔 이름"); // 예시로 호텔 이름 추가
+        redirectAttributes.addAttribute("isSuccess", isSuccess); // 성공 여부 추가
+
+        return "redirect:/hotel/selectRoom"; // 리다이렉트할 URL
     }
 }

@@ -5,6 +5,20 @@ body {
     color: #333;
     margin: 0;
     padding: 20px;
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+/* 중앙 정렬 컨테이너 */
+.container {
+    width: 80%;
+    max-width: 800px; /* 최대 폭을 설정 */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
 }
 
 /* 제목 스타일 */
@@ -33,6 +47,12 @@ th {
 }
 
 /* 버튼 스타일 */
+.button-container {
+    display: flex;
+    justify-content: space-around; /* 버튼을 좌우로 배치 */
+    margin: 20px 0;
+}
+
 button {
     background-color: #ff6f20; /* 오렌지색 */
     color: white;
@@ -41,6 +61,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s; /* 부드러운 전환 효과 */
+    margin: 0 10px;
 }
 
 button:hover {
