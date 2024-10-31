@@ -3,22 +3,23 @@
 <head>
   <title>리뷰 관리</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style3.css}">
 </head>
-<body class="container">
+<body class="container" style="display: flex; justify-content: center;">
+<div style="width: 920px; background-color: white; padding: 30px; border-radius: 30px;">
 <h2>리뷰 관리</h2>
 <table>
   <thead>
   <tr>
-    <th style="width: 80px;">번호</th>
+    <th style="width: 80px; text-align: center;">번호</th>
     <th style="width: 250px;">호텔명</th>
-    <th style="width: 40px;">평점</th>
+    <th style="width: 40px; text-align: center;">평점</th>
     <th style="width: 400px;">내용</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="reviewList : ${reviewList}">
-    <td style="text-align: right;">
+    <td style="text-align: center;">
     <a th:href="@{/review/userReviewUpdate (reviewID=${reviewList.reviewID}, hotelID=${reviewList.hotelID}, hotelName=${reviewList.hotelName}, star=${reviewList.star}, content=${reviewList.content})}"
        th:text="${reviewList.reviewID}"></a>
     </td>
@@ -31,5 +32,6 @@
 <br>
 <button type="submit" onclick="location.href='/review/userReviewReserveList'">등록</button>
 <button type="submit" th:onclick="|location.href='/'|">뒤로</button>
+</div>
 </body>
 </html>

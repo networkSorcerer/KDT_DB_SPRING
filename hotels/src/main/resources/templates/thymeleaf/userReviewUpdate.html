@@ -3,9 +3,10 @@
 <head>
   <title>리뷰 수정</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style3.css}">
 </head>
-<body class="container">
+<body class="container" style="display: flex; justify-content: center;">
+<div style="background-color: white; padding: 30px; border-radius: 30px; width: 500px;">
 <h2>리뷰 수정</h2>
 <form action="@{/review/userReviewList}" th:action="@{/review/userReviewUpdate}" method="post">
   <label for="reviewID">리뷰번호</label>
@@ -28,5 +29,6 @@
   <button type="submit" th:formaction="@{/review/userReviewDelete}">삭제</button>
   <button type="submit" th:formaction="@{/review/userReviewList}">취소</button>
 </form>
+</div>
 </body>
 </html>
