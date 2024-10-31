@@ -33,11 +33,19 @@ public class LoginController {
             Model model,
             HttpSession session) {
 
-        // 단일 UsersVO 객체를 가져옴
+
+
+        boolean existUser = usersDAO.checkUserIDExists(userid);
+
+        if (!existUser) {
+            logger.warn("Failed login attempt: user ID does not exist: {}", userid);
+            model.addAttribute("loginError", "User ID does not exist.");
+            return "/Main/Main"; // 로그인 페이지로 다시 이동
+        }
         UsersVO user = usersDAO.userLogin(userid, password);
-        logger.info("Logged in user: ID = {}, Name = {}, Grade = {}", user.getUserID(), user.getName(), user.getGrade());
         model.addAttribute("user",user);
-        if (user != null) {
+        if (user != null && existUser == true) {
+            logger.info("Logged in user: ID = {}, Name = {}, Grade = {}", user.getUserID(), user.getName(), user.getGrade());
             session.setAttribute("name", user.getName());
             session.setAttribute("userid", user.getUserID());
             session.setAttribute("grade", user.getGrade());
@@ -47,12 +55,12 @@ public class LoginController {
             } else if (user.getGrade() == 3) {
                 return "Main/mainMenu";
             }else {
-                return "Main/Main"; //
+                return "/Main/Main"; //
             }
         } else {
             logger.warn("Failed login attempt for username: {}", userid);
             model.addAttribute("loginError", "Invalid credentials");
-            return "redirect:/"; // 로그인 페이지로 다시 이동
+            return "/Main/Main"; // 로그인 페이지로 다시 이동
         }
     }
 

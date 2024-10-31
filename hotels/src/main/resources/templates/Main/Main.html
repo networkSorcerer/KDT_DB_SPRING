@@ -12,6 +12,10 @@
   <form th:action="@{/login/login}" method="post">
     <label for="userid">사용자 ID:</label>
     <input type="text" id="userid" name="userid" required>
+    <!-- 로그인 에러 메시지 표시 -->
+    <div th:if="${loginError}" style="color: red;">
+      <p th:text="${loginError}"></p>
+    </div>
     <br>
     <label for="password">비밀번호:</label>
     <input type="password" id="password" name="password" required>
