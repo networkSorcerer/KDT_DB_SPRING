@@ -53,7 +53,7 @@ public class ReviewDAO {
   
     public List<ReviewVO> hotelReviewList(int hotelId) {
         // SQL 쿼리 수정
-        String sql = "SELECT reviewID, userid, content, star FROM reviews WHERE hotelid = ?";
+        String sql = "SELECT reviewid, userid, content, star FROM reviews WHERE hotelid = ?";
         return jdbcTemplate.query(sql, new Review1RowMapper(), hotelId);
     }
 
