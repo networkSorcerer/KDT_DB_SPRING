@@ -154,6 +154,7 @@ public class ReviewController {
         System.out.println(reviewID);
 
         ReviewVO vo = new ReviewVO();
+
         vo.setReviewID(reviewID);
         vo.setStar(star);
         vo.setContent(content);
