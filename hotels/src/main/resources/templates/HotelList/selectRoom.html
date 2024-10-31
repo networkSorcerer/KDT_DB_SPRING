@@ -12,15 +12,30 @@
   <p>호텔 이름: <span th:text="${hotelName}"></span></p>
   <p>회원 ID : <span th:text="${userid != null ? userid : '로그인 필요'}"></span></p>
 
+  <div th:if="${userid == null}">
+    <form th:action="@{/login/login2}" method="post">
+      <input type="hidden" name="hotelId" th:value="${hotelId}" />
+      <input type="hidden" name="hotelName" th:value="${hotelName}">
+      <label for="userid">사용자 ID:</label>
+      <input type="text" id="userid" name="userid" required>
+      <br>
+      <label for="password">비밀번호:</label>
+      <input type="password" id="password" name="password" required>
+      <!-- 로그인 에러 메시지 표시 -->
+      <div th:if="${loginError}" style="color: red;">
+        <p th:text="${loginError}"></p>
+      </div>
+      <button type="submit">로그인</button>
+    </form>
+
+  </div>
+
   <form action="#" th:action="@{/reserve/reserveHotel}" method="post">
     <input type="hidden" name="hotelId" th:value="${hotelId}" />
     <input type="hidden" name="hotelName" th:value="${hotelName}"/>
     <input type="hidden" name="userid" th:value="${userid}"/>
 
-    <div th:if="${userid == null}">
-      <label for="userid">ID:</label>
-      <input type="text" id="userid" name="userid" required>
-    </div>
+
     <label for="startdate">체크 인</label>
     <input type="date" id="startdate" name="startdate" required>
 
@@ -32,7 +47,7 @@
 
   <div th:if="${session.userid} != null">
     <form th:action="@{/review/hotelReview}"  method="post">
-      <input type="hidden" name="hotelid" th:value="${hotelId}" />
+      <input type="hidden" name="hotelId" th:value="${hotelId}" />
       <input type="hidden" name="userid" th:value="${userid}"/>
 
       <table>

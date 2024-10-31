@@ -40,7 +40,7 @@ public class HotelController {
     public String selectRoom(@RequestParam("hotelId") int hotelId, @RequestParam("hotelName") String hotelName, Model model, HttpSession session){
         model.addAttribute("hotelId",hotelId);
         model.addAttribute("hotelName",hotelName);
-
+        session.setAttribute("hotelId",hotelId);
         String userid = (String) session.getAttribute("userid");
         session.setAttribute("hotelName",hotelName );
         logger.info("userid = {}",userid);
@@ -49,6 +49,7 @@ public class HotelController {
         model.addAttribute("avaRoom",avaRoom);
         model.addAttribute("hotelReview",hotelReview);
         model.addAttribute("userid",userid);
+        model.addAttribute("hotelId",hotelId);
         return "/HotelList/selectRoom";
     }
     @GetMapping ("/hotelList")
