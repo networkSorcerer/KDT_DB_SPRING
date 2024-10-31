@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>리뷰 등록</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/style3.css}">
+</head>
+<body class="container" style="display: flex; justify-content: center;">
+<div style="width: 1015px; background-color: white; padding: 30px; border-radius: 30px;">
+<h2>리뷰 등록</h2>
+<!-- 호텔 정보 -->
+<h3>호텔 정보</h3>
+<table>
+  <thead>
+  <tr>
+    <th style="width: 70px; text-align: center;">번호</th>
+    <th style="width: 250px;">호텔명</th>
+    <th style="width: 50px; text-align: center;">지역</th>
+    <th style="width: 120px;">전화번호</th>
+    <th style="width: 500px;">설명</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td th:text="${hotelVO.hotelID}" style="text-align: center;"></td>
+    <td th:text="${hotelVO.hotelName}"></td>
+    <td th:text="${hotelVO.region}" style="text-align: center"></td>
+    <td th:text="${hotelVO.phone}"></td>
+    <td th:text="${hotelVO.hotelExpl}"></td>
+  </tr>
+  </tbody>
+</table>
+<!-- 호텔 정보 끝 -->
+
+<!-- 리뷰 목록 -->
+<h3>리뷰 목록</h3>
+<table>
+  <thead>
+  <tr>
+    <th style="width: 80px; text-align: center;">번호</th>
+    <th style="width: 40px; text-align: center;">평점</th>
+    <th style="width: 400px;">내용</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="reviewReserveList : ${reviewReserveList}">
+    <td th:text="${reviewReserveList.reviewID}" style="text-align: center;"></td>
+    <td th:text="${reviewReserveList.star}" style="text-align: center;"></td>
+    <td th:text="${reviewReserveList.content}"></td>
+  </tr>
+  </tbody>
+</table>
+<!-- 리뷰 목록 끝 -->
+
+<!-- 리뷰 등록 -->
+<h3>리뷰 등록</h3>
+<form th:action="@{/review/userReviewInsert}" method="post">
+  <input type="hidden" id="hotelID" name="hotelID" th:value="${hotelVO.hotelID}">
+  <input type="hidden" id="hotelName" name="hotelName" th:value="${hotelVO.hotelName}">
+  <label for="star">평점:
+    <select id="star" name="star" th:value="${star}">
+      <option value="5" selected>5</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1</option>
+    </select>
+  </label>
+  <label for="content">내용</label>
+  <textarea id="content" name="content" th:text="${content}" style="width: 500px; height: 80px"></textarea>
+  <br>
+  <button type="submit">등록</button>
+  <button type="submit" th:formaction="@{/review/userReviewReserveList}">취소</button>
+</form>
+<!-- 리뷰 등록 끝 -->
+</div>
+</body>
+</html>

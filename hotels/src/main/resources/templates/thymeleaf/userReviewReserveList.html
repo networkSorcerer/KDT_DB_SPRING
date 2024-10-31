@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>예약 관리</title>
+  <title>리뷰 등록</title>
   <meta charset="utf-8">
   <link rel="stylesheet" th:href="@{/css/style3.css}">
 </head>
 <body class="container" style="display: flex; justify-content: center;">
-<div style="width: 1002px; background-color: white; padding: 30px; border-radius: 30px;">
-<h2>예약 관리</h2>
+<div style="width: 1010px; background-color: white; padding: 30px; border-radius: 30px;">
+<h2>리뷰 등록</h2>
+<h3>예약 목록</h3>
 <table>
   <thead>
   <tr>
@@ -25,10 +26,10 @@
   <tr th:each="reserveList : ${reserveList}">
     <td th:text="${reserveList.reserveID}" style="text-align: center;"></td>
     <td th:text="${reserveList.hotelID}" style="text-align: center;"></td>
-      <td>
-        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName}, startDate=${reserveList.startDate}, endDate=${reserveList.endDate}, roomid=${reserveList.roomid})}"
-           th:text="${reserveList.hotelName}"></a>
-      </td>
+    <td>
+      <a th:href="@{/review/userReviewInsert(hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName})}"
+         th:text="${reserveList.hotelName}"></a>
+    </td>
     <td th:text="${reserveList.startDate}" style="text-align: center;"></td>
     <td th:text="${reserveList.endDate}" style="text-align: center;"></td>
     <td th:text="${reserveList.roomid}" style="text-align: center;"></td>
@@ -38,7 +39,7 @@
   </tbody>
 </table>
 <br>
-<button type="submit" th:onclick="|location.href='/'|">뒤로</button>
+<button type="submit" th:onclick="|location.href='/review/userReviewList'|">뒤로</button>
 </div>
 </body>
 </html>
