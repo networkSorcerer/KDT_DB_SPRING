@@ -117,20 +117,20 @@ public class ReviewController {
     }
     @PostMapping("/hotelReview")
     public String hoteReview(Model model, RedirectAttributes redirectAttributes,
-                             @RequestParam("hotelid") int hotelid,
+                             @RequestParam("hotelId") int hotelId,
                              @RequestParam("userid") String userid,
                              @RequestParam("content") String content,
                              @RequestParam("star") int star) {
         ReviewVO review = new ReviewVO();
-        review.setHotelID(hotelid);
+        review.setHotelID(hotelId);
         review.setUserID(userid);
         review.setContent(content);
         review.setStar(star);
-
+        //boolean checkReserve =
         boolean isSuccess = reviewDAO.reviewWrite(review);
         model.addAttribute("isSuccess", isSuccess);
         model.addAttribute("review", review);
-        redirectAttributes.addAttribute("hotelId", hotelid); // 호텔 ID 추가
+        redirectAttributes.addAttribute("hotelId", hotelId); // 호텔 ID 추가
         redirectAttributes.addAttribute("hotelName", "호텔 이름"); // 예시로 호텔 이름 추가
         redirectAttributes.addAttribute("isSuccess", isSuccess); // 성공 여부 추가
 
