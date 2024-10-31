@@ -81,6 +81,7 @@
       <th>회원 ID</th>
       <th>내용</th>
       <th>별점</th>
+      <th>작업</th>
     </tr>
     </thead>
     <tbody>
@@ -88,9 +89,28 @@
       <td th:text="${review.userID}"></td>
       <td th:text="${review.content}"></td>
       <td th:text="${review.star}"></td>
+      <td th:if="${review.userID == session.userid}">
+        <form th:action="@{/review/hotelReviewUpdate}" method="post">
+          <input type="hidden" name="reviewID" th:value="${review.reviewID}"/>
+          <input type="hidden" name="userid" th:value="${review.userID}"/>
+          <input type="hidden" name="hotelId" th:value="${hotelId}"/>
+          <input type="hidden" name="hotelName" th:value="${hotelName}">
+          <input type="text" name="content" th:value="${review.content}" placeholder="리뷰 내용을 입력하세요" required/>
+          <select name="star" required>
+            <option th:value="${review.star}" th:text="${review.star}"></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <button type="submit">수정</button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>
+
 </div>
 
 </body>

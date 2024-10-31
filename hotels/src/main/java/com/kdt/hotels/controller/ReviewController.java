@@ -115,19 +115,24 @@ public class ReviewController {
         model.addAttribute("review", new ReviewVO());
         return "/HotelList/selectRoom";
     }
+    // 호텔 예약 페이지에서 리뷰 등록
     @PostMapping("/hotelReview")
     public String hoteReview(Model model, RedirectAttributes redirectAttributes,
+
                              @RequestParam("hotelId") int hotelId,
                              @RequestParam("userid") String userid,
                              @RequestParam("content") String content,
-                             @RequestParam("star") int star) {
+                             @RequestParam("star") int star,HttpSession session) {
         ReviewVO review = new ReviewVO();
+
         review.setHotelID(hotelId);
         review.setUserID(userid);
         review.setContent(content);
         review.setStar(star);
         //boolean checkReserve =
         boolean isSuccess = reviewDAO.reviewWrite(review);
+        String hotelName = (String) session.getAttribute("hotelName");
+
         model.addAttribute("isSuccess", isSuccess);
         model.addAttribute("review", review);
         redirectAttributes.addAttribute("hotelId", hotelId); // 호텔 ID 추가
@@ -135,5 +140,28 @@ public class ReviewController {
         redirectAttributes.addAttribute("isSuccess", isSuccess); // 성공 여부 추가
 
         return "redirect:/hotel/selectRoom"; // 리다이렉트할 URL
+    }
+
+    // 호텔 리뷰 수정 DB
+    @PostMapping("/hotelReviewUpdate")
+    public String hotelReviewUpdate(Model model,  RedirectAttributes redirectAttributes,
+                                    @RequestParam("reviewID") int reviewID,
+                                    @RequestParam("star") int star,
+                                    @RequestParam("content") String content,
+                                    @RequestParam("hotelId") int hotelId,
+                                    @RequestParam("hotelName") String hotelName
+            , HttpSession session){
+        System.out.println(reviewID);
+
+        ReviewVO vo = new ReviewVO();
+        vo.setReviewID(reviewID);
+        vo.setStar(star);
+        vo.setContent(content);
+        model.addAttribute("reviewUpdate", vo);
+        reviewDAO.userReviewUpdate(vo);
+
+        redirectAttributes.addAttribute("hotelId", hotelId); // 호텔 ID 추가
+        redirectAttributes.addAttribute("hotelName", hotelName); // 예시로 호텔 이름 추가
+        return "redirect:/hotel/selectRoom";
     }
 }
