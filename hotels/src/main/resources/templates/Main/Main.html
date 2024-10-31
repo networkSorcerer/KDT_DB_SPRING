@@ -15,6 +15,10 @@
     <br>
     <label for="password">비밀번호:</label>
     <input type="password" id="password" name="password" required>
+    <!-- 로그인 에러 메시지 표시 -->
+    <div th:if="${loginError}" style="color: red;">
+      <p th:text="${loginError}"></p>
+    </div>
     <button type="submit">로그인</button>
   </form>
 
