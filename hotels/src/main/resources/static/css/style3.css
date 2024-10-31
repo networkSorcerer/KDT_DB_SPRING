@@ -12,8 +12,8 @@ body {
 
 /* 중앙 정렬 컨테이너 */
 .container {
-    width: 80%;
-    max-width: 800px; /* 최대 폭을 설정 */
+    width: 90%;
+    max-width: 1600px; /* 최대 폭을 설정 */
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
