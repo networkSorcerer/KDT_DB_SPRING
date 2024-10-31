@@ -4,9 +4,10 @@
     <title>예약 수정</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style3.css}">
 </head>
-<body class="container">
+<body class="container" style="display: flex; justify-content: center;">
+<div style="width: 550px; background-color: white; padding: 30px; border-radius: 30px;">
 <h2>예약 수정</h2>
 <form action="#" th:action="@{/reserve/userReservationUpdate}" method="post">
     <label for="reserveID">예약번호</label>
@@ -21,12 +22,12 @@
     <table>
         <thead>
         <tr>
-            <th style="width: 40px;">선택</th>
-            <th style="width: 60px;">방번호</th>
-            <th style="width: 70px;">호텔번호</th>
-            <th style="width: 70px;">타입</th>
-            <th style="width: 80px;">가격</th>
-            <th>방번호</th>
+            <th style="width: 40px; text-align: center;">선택</th>
+            <th style="width: 60px; text-align: center;">방번호</th>
+            <th style="width: 70px; text-align: center;">호텔번호</th>
+            <th style="width: 70px; text-align: center;">타입</th>
+            <th style="width: 80px; text-align: center;">가격</th>
+            <th style="width: 60px; text-align: center;">호실</th>
         </tr>
         </thead>
         <tbody>
@@ -34,11 +35,11 @@
             <td style="text-align: center;">
                 <input type="radio" name="roomID" th:value="${room.roomID}" th:checked="${roomid} == ${room.roomID}" required>
             </td>
-            <td th:text="${room.roomID}" style="text-align: right;"></td>
-            <td th:text="${room.hotelID}" style="text-align: right;"></td>
-            <td th:text="${room.roomType}" style="text-align: right;"></td>
-            <td th:text="${room.price}" style="text-align: right;"></td>
-            <td th:text="${room.roomNumber}" style="text-align: right;"></td>
+            <td th:text="${room.roomID}" style="text-align: center;"></td>
+            <td th:text="${room.hotelID}" style="text-align: center;"></td>
+            <td th:text="${room.roomType}" style="text-align: center;"></td>
+            <td th:text="${room.price}" style="text-align: center;"></td>
+            <td th:text="${room.roomNumber}" style="text-align: center;"></td>
         </tr>
         </tbody>
     </table>
@@ -47,5 +48,6 @@
     <button type="submit" th:formaction="@{/reserve/userReservationDelete}">삭제</button>
     <button type="submit" th:formaction="@{/reserve/userReservationList}">취소</button>
 </form>
+</div>
 </body>
 </html>

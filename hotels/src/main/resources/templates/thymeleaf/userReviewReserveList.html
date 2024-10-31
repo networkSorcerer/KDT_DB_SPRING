@@ -3,41 +3,43 @@
 <head>
   <title>리뷰 등록</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style3.css}">
 </head>
-<body>
+<body class="container" style="display: flex; justify-content: center;">
+<div style="width: 1010px; background-color: white; padding: 30px; border-radius: 30px;">
 <h2>리뷰 등록</h2>
 <h3>예약 목록</h3>
 <table>
   <thead>
   <tr>
-    <th style="width: 80px;">예약번호</th>
-    <th style="width: 70px;">호텔번호</th>
+    <th style="width: 80px; text-align: center;">예약번호</th>
+    <th style="width: 70px; text-align: center;">호텔번호</th>
     <th style="width: 250px;">호텔명</th>
-    <th style="width: 100px;">체크인</th>
-    <th style="width: 100px;">체크아웃</th>
-    <th style="width: 60px;">방번호</th>
-    <th style="width: 70px;">타입</th>
-    <th style="width: 80px;">가격</th>
+    <th style="width: 100px; text-align: center;">체크인</th>
+    <th style="width: 100px; text-align: center;">체크아웃</th>
+    <th style="width: 60px; text-align: center;">방번호</th>
+    <th style="width: 70px; text-align: center;">타입</th>
+    <th style="width: 80px; text-align: center;">가격</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="reserveList : ${reserveList}">
-    <td th:text="${reserveList.reserveID}" style="text-align: right;"></td>
-    <td th:text="${reserveList.hotelID}" style="text-align: right;"></td>
+    <td th:text="${reserveList.reserveID}" style="text-align: center;"></td>
+    <td th:text="${reserveList.hotelID}" style="text-align: center;"></td>
     <td>
       <a th:href="@{/review/userReviewInsert(hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName})}"
          th:text="${reserveList.hotelName}"></a>
     </td>
     <td th:text="${reserveList.startDate}" style="text-align: center;"></td>
     <td th:text="${reserveList.endDate}" style="text-align: center;"></td>
-    <td th:text="${reserveList.roomid}" style="text-align: right;"></td>
-    <td th:text="${reserveList.roomtype}" style="text-align: right;"></td>
-    <td th:text="${reserveList.price}" style="text-align: right;"></td>
+    <td th:text="${reserveList.roomid}" style="text-align: center;"></td>
+    <td th:text="${reserveList.roomtype}" style="text-align: center;"></td>
+    <td th:text="${reserveList.price}" style="text-align: center;"></td>
   </tr>
   </tbody>
 </table>
 <br>
 <button type="submit" th:onclick="|location.href='/review/userReviewList'|">뒤로</button>
+</div>
 </body>
 </html>
