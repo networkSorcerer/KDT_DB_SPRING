@@ -12,14 +12,12 @@
   <p>호텔 이름: <span th:text="${hotelName}"></span></p>
   <p>회원 ID : <span th:text="${userid != null ? userid : '로그인 필요'}"></span></p>
 
-
-  <form action="#" th:action="@{/reserve/reserveHotel}" method="post"> <!-- 원래 reserveHotel-->
+  <form action="#" th:action="@{/reserve/reserveHotel}" method="post">
     <input type="hidden" name="hotelId" th:value="${hotelId}" />
     <input type="hidden" name="hotelName" th:value="${hotelName}"/>
     <input type="hidden" name="userid" th:value="${userid}"/>
 
     <div th:if="${userid == null}">
-
       <label for="userid">ID:</label>
       <input type="text" id="userid" name="userid" required>
     </div>
@@ -31,26 +29,54 @@
 
     <button type="submit">예약 가능한 방 조회</button>
   </form>
-    </div>
-    <div class="form-container">
-    <h2>리뷰</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>회원 ID</th>
-        <th>내용</th>
-        <th>별점</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="review : ${hotelReview}">
-        <td th:text="${review.userID}"></td><!--VO와 동일해야 함 100% -->
-        <td th:text="${review.content}"></td>
-        <td th:text="${review.star}"></td>
-      </tr>
-      </tbody>
-    </table>
-    </div>
+
+  <div th:if="${session.userid} != null">
+    <form th:action="@{/review/hotelReview}"  method="post">
+      <input type="hidden" name="hotelid" th:value="${hotelId}" />
+      <input type="hidden" name="userid" th:value="${userid}"/>
+
+      <table>
+        <tbody>
+        <tr>
+          <td>
+            <button type="submit">등록</button>
+          </td>
+          <td>
+            <input type="text" name="content" th:value="${content}" placeholder="리뷰 내용을 입력하세요" required />
+          </td>
+          <td>
+            <select name="star" required th:value="${star}" >
+              <option value="">별점을 선택하세요</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>회원 ID</th>
+      <th>내용</th>
+      <th>별점</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${hotelReview}">
+      <td th:text="${review.userID}"></td>
+      <td th:text="${review.content}"></td>
+      <td th:text="${review.star}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
