@@ -3,6 +3,7 @@ package com.kdt.hotels.dao;
 import com.kdt.hotels.mapper.Review1RowMapper;
 import com.kdt.hotels.mapper.ReviewRowMapper;
 import com.kdt.hotels.vo.ReviewVO;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -60,5 +61,18 @@ public class ReviewDAO {
     public void userReviewDelete(int reviewID){
         String sql = "DELETE REVIEWS WHERE REVIEWID = ?";
         jdbcTemplate.update(sql, reviewID);
+    }
+
+    public boolean reviewWrite(ReviewVO reviewVO) {
+
+        int result = 0;
+        String sql = "insert into reviews (reviewid , hotelid, userid, content,star) values(reviews_seq.nextval,?,?,?,?) ";
+        try {
+            result = jdbcTemplate.update(sql, reviewVO.getHotelID(), reviewVO.getUserID(), reviewVO.getContent(), reviewVO.getStar());
+
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return result > 0;
     }
 }

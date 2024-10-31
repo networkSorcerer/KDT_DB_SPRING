@@ -54,7 +54,7 @@ public class ReservationController {
             @RequestParam("startdate") String startDate,
             @RequestParam("enddate") String endDate,
             Model model, HttpSession session) {
-        String userid = (String) session.getAttribute("userid");
+            String userid = (String) session.getAttribute("userid");
         if (userid == null && userid1 != null) {
             userid = userid1;
         }
