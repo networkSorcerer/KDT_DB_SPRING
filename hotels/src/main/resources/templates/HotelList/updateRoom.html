@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/css/style3.css">
 </head>
 <body>
-<div class="form-container">
+<div class="container">
   <h1 th:text="${selectRoom != null} ? '방 업데이트' : '방 추가'"></h1>
   <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
     <input type="hidden" th:if="${selectRoom != null}" th:name="roomid" th:value="${selectRoom.roomID}"/>

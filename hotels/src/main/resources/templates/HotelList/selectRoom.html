@@ -5,8 +5,8 @@
   <title>호텔 예약</title>
   <link rel="stylesheet" type="text/css" href="/css/style3.css">
 </head>
-<body class="container">
-<div class="form-container">
+<body >
+<div class="container">
   <h2>호텔 예약</h2>
   <p>호텔 ID: <span th:text="${hotelId}"></span></p>
   <p>호텔 이름: <span th:text="${hotelName}"></span></p>
@@ -41,7 +41,7 @@
 
     <label for="enddate">체크 아웃</label>
     <input type="date" id="enddate" name="enddate" required>
-
+    <br>
     <button type="submit">예약 가능한 방 조회</button>
   </form>
 
@@ -86,6 +86,7 @@
     </thead>
     <tbody>
     <tr th:each="review : ${hotelReview}">
+
       <td th:text="${review.userID}"></td>
       <td th:text="${review.content}"></td>
       <td th:text="${review.star}"></td>

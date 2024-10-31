@@ -17,6 +17,4 @@ public class ReviewVO {
     private String content;
     private int star;
 
-    public ReviewVO(int reviewID, String userID, String content, int star) {
-    }
 }

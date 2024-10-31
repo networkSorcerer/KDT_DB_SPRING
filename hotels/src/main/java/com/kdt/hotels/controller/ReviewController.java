@@ -110,11 +110,11 @@ public class ReviewController {
         reviewDAO.userReviewDelete(reviewID);
         return "redirect:/review/userReviewList";
     }
-    @GetMapping("/hotelReview")
-    public String insertViewReview(Model model){
-        model.addAttribute("review", new ReviewVO());
-        return "/HotelList/selectRoom";
-    }
+//    @GetMapping("/hotelReview")
+//    public String insertViewReview(Model model){
+//        model.addAttribute("review", new ReviewVO());
+//        return "/HotelList/selectRoom";
+//    }
     // 호텔 예약 페이지에서 리뷰 등록
     @PostMapping("/hotelReview")
     public String hoteReview(Model model, RedirectAttributes redirectAttributes,

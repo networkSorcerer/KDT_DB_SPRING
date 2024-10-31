@@ -46,6 +46,7 @@ public class HotelController {
         logger.info("userid = {}",userid);
         List<RoomVO> avaRoom = roomDAO.avaRoom(hotelId);
         List<ReviewVO> hotelReview = reviewDAO.hotelReviewList(hotelId);
+
         model.addAttribute("avaRoom",avaRoom);
         model.addAttribute("hotelReview",hotelReview);
         model.addAttribute("userid",userid);
