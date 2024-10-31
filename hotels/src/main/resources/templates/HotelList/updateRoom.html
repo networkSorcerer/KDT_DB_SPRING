@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>방 업데이트 및 추가</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" type="text/css" href="/css/style3.css">
 </head>
 <body>
 <div class="form-container">
   <h1 th:text="${selectRoom != null} ? '방 업데이트' : '방 추가'"></h1>
   <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
     <input type="hidden" th:if="${selectRoom != null}" th:name="roomid" th:value="${selectRoom.roomID}"/>
-    <input type="hidden" th:if="${selectRoom ! =null" th:name="hotelid" th:value="${selectRoom.hotelID"/>
+    <input type="hidden" th:name="hotelid" th:value="${hotelid}"/>
+
     <table>
       <tbody>
       <tr>
@@ -19,7 +20,7 @@
       </tr>
       <tr>
         <td>호텔 ID:</td>
-        <td><input  th:text="${selectRoom != null} ? ${selectRoom.hotelID} : ''" /></td>
+        <td><input type="text" th:name="hotelid" th:value="${selectRoom != null} ? ${selectRoom.hotelID} : ${hotelid}" /></td>
       </tr>
       <tr>
         <td>방 유형:</td>

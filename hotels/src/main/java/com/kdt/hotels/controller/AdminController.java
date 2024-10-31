@@ -1,8 +1,10 @@
 package com.kdt.hotels.controller;
 
 import com.kdt.hotels.dao.HotelDAO;
+import com.kdt.hotels.dao.RoomDAO;
 import com.kdt.hotels.dao.UsersDAO;
 import com.kdt.hotels.vo.HotelVO;
+import com.kdt.hotels.vo.RoomVO;
 import com.kdt.hotels.vo.UsersVO;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private UsersDAO usersDAO;
+
+    @Autowired
+    private RoomDAO roomDAO;
 
     // 관리자 메인 페이지
     @GetMapping("/management")
@@ -85,6 +90,59 @@ public class AdminController {
         hotelDAO.hotelDelete(hotelID); // 호텔 삭제 메소드
         return "redirect:/admin/management/hotel"; // 관리 페이지로 리다이렉트
     }
+    // 호텔관리 리스트에서 방관리 리스트로
+    @GetMapping("/management/hotel/room/select")
+    public String showRoomList(@RequestParam("hotelID") int hotelID, Model model) {
+        System.out.println("Hotel ID received: " + hotelID);
+
+        List<RoomVO> rooms = roomDAO.hotelRoom(hotelID);
+        System.out.println("Rooms found: " + rooms.size());
+
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("hotelID", hotelID);
+        return "admin/room_management";
+    }
+    // 방 추가 페이지 이동
+    @GetMapping("/management/hotel/room/add")
+    public String showAddRoomPage(@RequestParam("hotelID") int hotelID, Model model) {
+        RoomVO room = new RoomVO();
+        room.setHotelID(hotelID);
+        model.addAttribute("room", room);
+        model.addAttribute("hotelID", hotelID); //취소 버튼에 필요
+        return "admin/add_room";
+    }
+    @PostMapping("/management/hotel/room/add")
+    public String addRoom(@ModelAttribute RoomVO room) {
+        roomDAO.roomPlus(room);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + room.getHotelID();
+    }
+
+    // 방 수정 페이지 이동
+    @GetMapping("/management/hotel/room/update/{roomID}")
+    public String showUpdateRoomPage(@PathVariable("roomID") int roomID, @RequestParam("hotelID") int hotelID, Model model) {
+        RoomVO room = roomDAO.selectRoom(roomID).get(0);
+        model.addAttribute("room", room);
+        model.addAttribute("hotelID", hotelID); // 돌아가기 버튼에 필요
+        return "admin/update_room";
+    }
+
+    @PostMapping("/management/hotel/room/update/{roomID}")
+    public String updateRoom(@ModelAttribute RoomVO room, @RequestParam("hotelID") int hotelID, Model model) {
+        System.out.println("Updating Room: " + room);  // RoomVO의 toString() 메소드를 오버라이드 하거나, 각 필드 출력
+        roomDAO.roomUpdate(room);
+        model.addAttribute("hotelID", hotelID);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + hotelID;
+    }
+
+    // 방 삭제 처리
+    @PostMapping("/management/hotel/room/delete/{roomID}")
+    public String deleteRoom(@PathVariable("roomID") int roomID, @RequestParam("hotelID") int hotelID, Model model) {
+        roomDAO.roomDelete(roomID); // 방 삭제 메소드
+        model.addAttribute("hotelID", hotelID);
+        return "redirect:/admin/management/hotel/room/select?hotelID=" + hotelID;
+    }
+
+
 
     // 유저 관리 페이지
     @GetMapping("/management/user")

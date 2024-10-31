@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Rooms</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/css/style3.css">
+</head>
+<body>
+<div class="form-container">
+    <h1><span th:text="${hotelName1}"></span></h1>
+    <h2>
+        <span th:text="${#dates.format(reservation.startDate, 'yyyy-MM-dd')}"></span>
+        ~
+        <span th:text="${#dates.format(reservation.endDate, 'yyyy-MM-dd')}"></span>
+    </h2>
+    <form action="#" th:action="@{/reserve/reserveRoom}" method="post"> <!-- 원래 reserveHotel-->
+        <input type="hidden" name="hotelID" th:value="${reservation.hotelID}" />
+        <input type="hidden" name="startDate" th:value="${reservation.startDate}" />
+        <input type="hidden" name="endDate" th:value="${reservation.endDate}" />
+        <input type="hidden" name="userID" th:value="${reservation.userID}" />
+
+        <table>
+        <thead>
+        <tr>
+            <th></th>
+
+            <th>Room Type</th>
+            <th>Price</th>
+            <th>Room Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${avaRooms}">
+            <td>
+                <input type="radio" name="roomid" th:value="${room.roomID}" required>
+            </td>
+            <td th:text="${room.roomType}"></td>
+            <td th:text="${room.price}"></td>
+            <td th:text="${room.roomNumber}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <button type="submit">예약 하기</button>
+    </div>
+    </form>
+</div>
+</body>
+</html>
