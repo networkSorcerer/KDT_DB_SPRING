@@ -47,11 +47,12 @@ public class RoomDAO {
 
     public boolean roomUpdate(RoomVO vo) {
         int result = 0;
-        String sql = "UPDATE room SET hotelid = ?, roomtype = ?, price = ?, roomnumber = ? WHERE roomid = ?";
+
+        String sql = "UPDATE room SET roomtype = ?, price = ?, roomnumber = ? WHERE roomid = ?";
         try {
-            System.out.println("Updating room with ID: " + vo.getRoomID());
-            result = jdbcTemplate.update(sql, vo.getHotelID(), vo.getRoomType(), vo.getPrice(), vo.getRoomNumber(), vo.getRoomID());
-            System.out.println("Rows affected: " + result);
+
+            result = jdbcTemplate.update(sql, vo.getRoomType(), vo.getPrice(), vo.getRoomNumber(), vo.getRoomID());
+
         } catch (DataAccessException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -64,7 +65,7 @@ public class RoomDAO {
         int result = 0;
         String sql = "INSERT INTO room (roomid, hotelid, roomtype, price, roomnumber) VALUES (room_seq.nextval, ?, ?, ?, ?)"; // "VALUES"로 수정
         try {
-            result = jdbcTemplate.update(sql, vo.getHotelID(), vo.getRoomType(), vo.getPrice(), vo.getRoomNumber()); // roomType 중복 수정
+            result = jdbcTemplate.update(sql,new RoomRowMapper(), vo.getHotelID(), vo.getRoomType(), vo.getPrice(), vo.getRoomNumber()); // roomType 중복 수정
         } catch (DataAccessException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
