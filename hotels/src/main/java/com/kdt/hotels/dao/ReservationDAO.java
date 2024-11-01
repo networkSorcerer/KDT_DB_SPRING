@@ -75,9 +75,22 @@ public class ReservationDAO {
                 "JOIN HOTEL H ON R.HOTELID = H.HOTELID " +
                 "JOIN ROOM RM ON R.ROOMID = RM.ROOMID " +
                 "WHERE R.USERID = ?";
-                //rowmapper에 10개의 열이 있으면 10개 다해야 함 아까 그래서 mypage는 안되고 내껀되고 그랬던거임
+                //rowmapper에 10개의 열이 있으면 10개 다해야 함
         return jdbcTemplate.query(sql, new ReservationRowMapper(), userID);
 
     }
 
+    public boolean reserveUpdate(ReservationVO reservationVO) {
+        int result = 0;
+        String sql = "update reservation set startdate = ? , enddate = ? , roomid = ? where reserveid = ? ";
+        try{
+            result = jdbcTemplate.update(sql,reservationVO.getStartDate(), reservationVO.getEndDate(),reservationVO.getRoomID(),reservationVO.getReserveID());
+
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            System.err.println("SQL Error: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return result > 0;
+    }
 }

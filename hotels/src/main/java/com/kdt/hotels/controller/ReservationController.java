@@ -7,6 +7,7 @@ import com.kdt.hotels.vo.RoomVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
@@ -126,11 +127,54 @@ public class ReservationController {
         return "redirect:/reserve/userReservationList";
     }
 
-    @GetMapping("myReserveList")
+    @GetMapping("/myReserveList")
     public String myReserveList (Model model,HttpSession session) {
         String userID = (String) session.getAttribute("userid");
         List<ReservationVO> myReserveList = reservationDAO.myReserveList(userID);
         model.addAttribute("myReserveList",myReserveList);
         return "/HotelList/myReserveList";
+    }
+    @GetMapping("/reserveUpdate")
+    public String reserveUpdate (Model model,
+                                 @RequestParam("reserveID") int reserveID,
+                                 @RequestParam("hotelID")int hotelID,
+                                 @RequestParam("hotelName")String hotelName,
+                                 @RequestParam("startDate") String startDate,
+                                 @RequestParam("endDate")String endDate,
+                                 @RequestParam("roomID")int roomID) {
+        ReservationVO reservationVO = new ReservationVO();
+        reservationVO.setReserveID(reserveID);
+        reservationVO.setHotelID(hotelID);
+        reservationVO.setHotelName(hotelName);
+        reservationVO.setStartDate(Date.valueOf(startDate));
+        reservationVO.setEndDate(Date.valueOf(endDate));
+        reservationVO.setRoomID(roomID);
+        System.out.println(hotelID);
+        model.addAttribute("re",reservationVO);
+        List<RoomVO> avaRoom = roomDAO.avaRoom(hotelID);
+        model.addAttribute("avaRoom",avaRoom);
+
+
+        return "/HotelList/reserveUpdate";
+    }
+    @PostMapping("/reserveUpdate1")
+    public String reserveDBUpdate (Model model,
+                                   @RequestParam("reserveID") int reserveID,
+                                   @RequestParam("startDate") String startDate,
+                                   @RequestParam("endDate") String endDate,
+                                   @RequestParam("roomID") int roomID
+                                   ){
+        ReservationVO reservationVO = new ReservationVO();
+        reservationVO.setReserveID(reserveID);
+        reservationVO.setStartDate(Date.valueOf(startDate));
+        reservationVO.setEndDate(Date.valueOf(endDate));
+        reservationVO.setRoomID(roomID);
+    System.out.println(reserveID);
+    System.out.println(startDate);
+    System.out.println(endDate);
+    System.out.println(roomID);
+        boolean isSuccess = reservationDAO.reserveUpdate(reservationVO);
+        model.addAttribute("isSuccess",isSuccess);
+        return "/HotelList/reserveResult";
     }
 }
