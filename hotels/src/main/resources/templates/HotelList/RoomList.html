@@ -27,7 +27,7 @@
       <td th:text="${room.hotelID}"></td>
       <td th:text="${room.price}"></td>
       <td th:text="${room.roomNumber}"></td>
-      <td><a th:href="@{/room/select(roomid=${room.roomID})}">방 수정</a></td>
+      <td><a th:href="@{/room/select(roomID=${room.roomID})}">방 수정</a></td>
       <td><a th:href="'/room/delete/' + ${room.roomID}">방 삭제</a></td>
     </tr>
     </tbody>

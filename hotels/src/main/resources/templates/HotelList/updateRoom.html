@@ -9,8 +9,8 @@
 <div class="container">
   <h1 th:text="${selectRoom != null} ? '방 업데이트' : '방 추가'"></h1>
   <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
-    <input type="hidden" th:if="${selectRoom != null}" th:name="roomid" th:value="${selectRoom.roomID}"/>
-    <input type="hidden" th:name="hotelid" th:value="${hotelid}"/>
+    <input type="hidden" th:if="${selectRoom != null}" th:name="roomID" th:value="${selectRoom.roomID}"/>
+
 
     <table>
       <tbody>
@@ -20,11 +20,24 @@
       </tr>
       <tr>
         <td>호텔 ID:</td>
-        <td><input type="text" th:name="hotelid" th:value="${selectRoom != null} ? ${selectRoom.hotelID} : ${hotelid}" /></td>
+        <td>
+          <input type="text" th:name="hotelID"
+                 th:value="${selectRoom != null} ? ${selectRoom.hotelID} : ${hotelID}"
+                 readonly />
+        </td>
       </tr>
       <tr>
         <td>방 유형:</td>
-        <td><input type="text" th:name="roomType" th:value="${selectRoom != null} ? ${selectRoom.roomType} : ''" required/></td>
+        <td>
+          <select th:name="roomType" required>
+            <option th:value="'베이직'" th:text="'베이직'"
+                    th:selected="${selectRoom != null && selectRoom.roomType == '베이직' }">베이직</option>
+            <option th:value="'스위트'" th:text="'스위트'"
+                    th:selected="${selectRoom != null && selectRoom.roomType == '스위트' }">스위트</option>
+            <option th:value="'럭셔리'" th:text="'럭셔리'"
+                    th:selected="${selectRoom != null && selectRoom.roomType == '럭셔리' }">럭셔리</option>
+          </select>
+        </td>
       </tr>
 
       <tr>
