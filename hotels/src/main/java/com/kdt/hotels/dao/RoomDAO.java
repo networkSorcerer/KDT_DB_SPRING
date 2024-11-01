@@ -65,7 +65,7 @@ public class RoomDAO {
         int result = 0;
         String sql = "INSERT INTO room (roomid, hotelid, roomtype, price, roomnumber) VALUES (room_seq.nextval, ?, ?, ?, ?)"; // "VALUES"로 수정
         try {
-            result = jdbcTemplate.update(sql,new RoomRowMapper(), vo.getHotelID(), vo.getRoomType(), vo.getPrice(), vo.getRoomNumber()); // roomType 중복 수정
+            result = jdbcTemplate.update(sql, vo.getHotelID(), vo.getRoomType(), vo.getPrice(), vo.getRoomNumber()); // roomType 중복 수정
         } catch (DataAccessException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
