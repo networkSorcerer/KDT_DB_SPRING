@@ -23,7 +23,10 @@
   <tbody>
   <tr th:each="reserve : ${myReserveList}">
     <td th:text="${reserve.reserveID}"></td>
-    <td th:text="${reserve.hotelName}"></td>
+    <td>
+      <a th:href="@{/reserve/reserveUpdate(reserveID=${reserve.reserveID}, hotelID=${reserve.hotelID}, hotelName=${reserve.hotelName}, startDate=${reserve.startDate}, endDate=${reserve.endDate}, roomID=${reserve.roomID})}" th:text="${reserve.hotelName}"></a>
+    </td>
+
     <td th:text="${reserve.userID}"></td>
     <td th:text="${reserve.roomType}"></td>
     <td th:text="${reserve.roomNumber}"></td>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>방 업데이트 및 추가</title>
+  <link rel="stylesheet" type="text/css" href="/css/style3.css">
+</head>
+<body>
+<h1>나의 예약 목록</h1>
+<form  action="@{/reserve/reserveUpdate1}" method="post">
+ <!-- 폼 추가, action 속성에 적절한 URL 설정 필요 -->
+  <input type="hidden" th:name="reserveID" th:value="${re.reserveID}">
+  <table>
+    <thead>
+    <tr>
+      <th>접수 번호</th>
+      <th>호텔 명</th>
+      <th>체크 인</th>
+      <th>체크 아웃</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td th:text="${re.reserveID}"></td>
+      <td th:text="${re.hotelName}"></td>
+      <td>
+        <input type="date" name="startDate" th:value="${re.startDate}" />
+      </td>
+      <td>
+        <input type="date" name="endDate" th:value="${re.endDate}" />
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th>Room Type</th>
+      <th>Price</th>
+      <th>Room Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${avaRoom}">
+      <td>
+        <input type="radio" name="roomID" th:value="${room.roomID}" th:checked="${room.roomID == re.roomID}" required />
+      </td>
+      <td th:text="${room.roomType}"></td>
+      <td th:text="${room.price}"></td>
+      <td th:text="${room.roomNumber}"></td>
+    </tr>
+
+    </tbody>
+  </table>
+  <div>
+    <button type="submit">예약 하기</button>
+  </div>
+</form> <!-- 폼 닫기 -->
+</body>
+</html>
