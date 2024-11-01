@@ -82,7 +82,7 @@ public class ReservationController {
     @PostMapping("/reserveRoom")
     public String reserveHotel(Model model,ReservationVO vo){
         System.out.println(vo.getHotelID());
-        System.out.println(vo.getRoomid());
+        System.out.println(vo.getRoomID());
         System.out.println(vo.getUserID());
         System.out.println(vo.getStartDate());
         System.out.println(vo.getEndDate());
@@ -112,7 +112,7 @@ public class ReservationController {
         vo.setReserveID(reserveID);
         vo.setStartDate(startDate);
         vo.setEndDate(endDate);
-        vo.setRoomid(roomID);
+        vo.setRoomID(roomID);
         model.addAttribute("reservationUpdate", vo);
         reservationDAO.userReservationUpdate(vo);
         return "redirect:/reserve/userReservationList";
@@ -124,5 +124,13 @@ public class ReservationController {
         model.addAttribute("reservationDelete", reserveID);
         reservationDAO.userReservationDelete(reserveID);
         return "redirect:/reserve/userReservationList";
+    }
+
+    @GetMapping("myReserveList")
+    public String myReserveList (Model model,HttpSession session) {
+        String userID = (String) session.getAttribute("userid");
+        List<ReservationVO> myReserveList = reservationDAO.myReserveList(userID);
+        model.addAttribute("myReserveList",myReserveList);
+        return "/HotelList/myReserveList";
     }
 }

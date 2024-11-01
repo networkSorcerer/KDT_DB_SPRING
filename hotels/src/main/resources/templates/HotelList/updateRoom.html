@@ -11,7 +11,6 @@
   <form th:action="@{/room/update}" th:object="${selectRoom}" method="post">
     <input type="hidden" th:if="${selectRoom != null}" th:name="roomID" th:value="${selectRoom.roomID}"/>
 
-
     <table>
       <tbody>
       <tr>

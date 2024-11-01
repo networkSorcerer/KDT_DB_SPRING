@@ -26,13 +26,13 @@
     <td th:text="${reserveList.reserveID}" style="text-align: center;"></td>
     <td th:text="${reserveList.hotelID}" style="text-align: center;"></td>
       <td>
-        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName}, startDate=${reserveList.startDate}, endDate=${reserveList.endDate}, roomid=${reserveList.roomid})}"
+        <a th:href="@{/reserve/userReservationUpdate(reserveID=${reserveList.reserveID}, hotelID=${reserveList.hotelID}, hotelName=${reserveList.hotelName}, startDate=${reserveList.startDate}, endDate=${reserveList.endDate}, roomid=${reserveList.roomID})}"
            th:text="${reserveList.hotelName}"></a>
       </td>
     <td th:text="${reserveList.startDate}" style="text-align: center;"></td>
     <td th:text="${reserveList.endDate}" style="text-align: center;"></td>
-    <td th:text="${reserveList.roomid}" style="text-align: center;"></td>
-    <td th:text="${reserveList.roomtype}" style="text-align: center;"></td>
+    <td th:text="${reserveList.roomID}" style="text-align: center;"></td>
+    <td th:text="${reserveList.roomType}" style="text-align: center;"></td>
     <td th:text="${reserveList.price}" style="text-align: center;"></td>
   </tr>
   </tbody>
