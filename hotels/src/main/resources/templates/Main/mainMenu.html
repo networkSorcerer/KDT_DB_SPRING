@@ -6,13 +6,14 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-    <div class="sidebar">
-        <h2>반갑습니다, <span th:text="${session.name}">사용자</span>님!</h2>
-        <h1>당신의 등급: <span th:text="${user.grade}">등급</span></h1>
-        <button onclick="location.href=''">예약 관리</button>
-        <button onclick="location.href=''">리뷰 관리</button>
-        <button onclick="location.href='/hotel/hotelList'">호텔 관리</button>
-        <button onclick="location.href='/logout'">로그아웃</button>
-    </div>
+<div class="sidebar">
+    <span th:text="${userID}"></span> <!-- 수정된 부분 -->
+    <h2>반갑습니다, <span th:text="${session.name}">사용자</span>님!</h2>
+    <h1>당신의 등급: <span th:text="${user.grade}">등급</span></h1>
+    <button onclick="location.href='/reserve/myReserveList'">예약 관리</button>
+    <button onclick="location.href=''">리뷰 관리</button>
+    <button onclick="location.href='/hotel/hotelList'">호텔 관리</button>
+    <button onclick="location.href='/logout'">로그아웃</button>
+</div>
 </body>
 </html>

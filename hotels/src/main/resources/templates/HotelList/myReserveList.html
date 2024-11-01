@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>방 업데이트 및 추가</title>
+  <link rel="stylesheet" type="text/css" href="/css/style3.css">
+</head>
+<body>
+<h1>나의 예약 목록</h1>
+<table>
+  <thead>
+  <tr>
+    <th>접수 번호</th>
+    <th>호텔 명</th>
+    <th>회원 ID</th>
+    <th>방 타입</th>
+    <th>방 번호</th>
+    <th>가격</th>
+    <th>체크 인</th>
+    <th>체크 아웃</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="reserve : ${myReserveList}">
+    <td th:text="${reserve.reserveID}"></td>
+    <td th:text="${reserve.hotelName}"></td>
+    <td th:text="${reserve.userID}"></td>
+    <td th:text="${reserve.roomType}"></td>
+    <td th:text="${reserve.roomNumber}"></td>
+    <td th:text="${reserve.price}"></td>
+    <td th:text="${reserve.startDate}"></td>
+    <td th:text="${reserve.endDate}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

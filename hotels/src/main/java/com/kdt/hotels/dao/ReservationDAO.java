@@ -36,7 +36,7 @@ public class ReservationDAO {
         int result = 0;
         String sql = "UPDATE RESERVATION SET STARTDATE = ?, ENDDATE = ?, ROOMID = ? WHERE RESERVEID = ?";
         try{
-            result = jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomid(), vo.getReserveID());
+            result = jdbcTemplate.update(sql, vo.getStartDate(), vo.getEndDate(), vo.getRoomID(), vo.getReserveID());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +49,7 @@ public class ReservationDAO {
         String sql = "INSERT INTO reservation (reserveid, userid, hotelid, roomid, startdate, enddate) VALUES (reservation_seq.nextval, ?, ?, ?, ?, ?)";
         try {
             // reserveID를 제거하고 나머지 매개변수만 사용
-            result = jdbcTemplate.update(sql, vo.getUserID(), vo.getHotelID(), vo.getRoomid(), vo.getStartDate(), vo.getEndDate());
+            result = jdbcTemplate.update(sql, vo.getUserID(), vo.getHotelID(), vo.getRoomID(), vo.getStartDate(), vo.getEndDate());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -69,5 +69,15 @@ public class ReservationDAO {
     }
 
 
+    public List<ReservationVO> myReserveList(String userID) {
+        String sql = "SELECT R.RESERVEID, rm.roomid,h.hotelid, R.USERID, H.HOTELNAME, RM.ROOMTYPE, RM.PRICE, RM.ROOMNUMBER, R.STARTDATE, R.ENDDATE " +
+                "FROM RESERVATION R " +
+                "JOIN HOTEL H ON R.HOTELID = H.HOTELID " +
+                "JOIN ROOM RM ON R.ROOMID = RM.ROOMID " +
+                "WHERE R.USERID = ?";
+                //rowmapper에 10개의 열이 있으면 10개 다해야 함 아까 그래서 mypage는 안되고 내껀되고 그랬던거임
+        return jdbcTemplate.query(sql, new ReservationRowMapper(), userID);
+
+    }
 
 }
